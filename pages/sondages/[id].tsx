@@ -8,12 +8,13 @@ type PageParams = {
 };
 
 type ContentPageProps = {
-  post: Post;
+  sondage: Sondage;
 };
 
 type ResponseFromServer = {
   title: string;
   content: string;
+  answers: string[];
   _id: string;
 };
 
@@ -24,7 +25,7 @@ export async function getStaticProps({
 > {
   try {
     let response = await fetch(
-      "http://localhost:3000/api/posts/getPost?id=" + params?.id
+      "http://localhost:3000/api/sondages/getSondage?id=" + params?.id
     );
 
     let responseFromServer: ResponseFromServer = await response.json();
@@ -32,10 +33,11 @@ export async function getStaticProps({
     return {
       // Passed to the page component as props
       props: {
-        post: {
+        sondage: {
           _id: responseFromServer._id,
           title: responseFromServer.title,
           content: responseFromServer.content,
+          answers: responseFromServer.answers,
         },
       },
     };
@@ -43,10 +45,11 @@ export async function getStaticProps({
     console.log("error ", e);
     return {
       props: {
-        post: {
+        sondage: {
           _id:"  ",
           title:"  ",
-          content:"  ",
+          content: "  ",
+          answers: [],
         },
       },
     };
@@ -54,14 +57,14 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  let posts = await fetch("http://localhost:3000/api/posts/getPosts");
+  let sondages = await fetch("http://localhost:3000/api/sondages/getSondages");
 
-  let postFromServer: [Post] = await posts.json();
+  let sondageFromServer: [Sondage] = await sondages.json();
   return {
-    paths: postFromServer.map((post) => {
+    paths: sondageFromServer.map((sondage) => {
       return {
         params: {
-          id: post._id,
+          id: sondage._id,
         },
       };
     }),
@@ -70,25 +73,27 @@ export async function getStaticPaths() {
 }
 
 
-export default function EditPost({
-  post: { _id, title, content },
+export default function EditSondage({
+  sondage: { _id, title, content, answers },
 }: ContentPageProps) {
-  const [postTitle, setPostTitle] = useState(title);
-  const [postContent, setPostContent] = useState(content);
+  const [sondageTitle, setSondageTitle] = useState(title);
+  const [sondageContent, setSondageContent] = useState(content);
+  const [sondageAnswers, setSondageAnswers] = useState(answers)
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (postTitle && postContent) {
+    if (sondageTitle && sondageContent && sondageAnswers.length) {
       try {
         let response = await fetch(
-          "http://localhost:3000/api/editPost?id=" + _id,
+          "http://localhost:3000/api/editSondage?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({
-              title: postTitle,
-              content: postContent,
+              title: sondageTitle,
+              content: sondageContent,
+              answers: sondageAnswers,
             }),
             headers: {
               Accept: "application/json, text/plain, */*",
@@ -97,10 +102,11 @@ export default function EditPost({
           }
         );
         response = await response.json();
-        setPostTitle("");
-        setPostContent("");
+        setSondageTitle("");
+        setSondageContent("");
+        setSondageAnswers([]);
         setError("");
-        setMessage("Post edited successfully");
+        setMessage("Sondage edited successfully");
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -109,8 +115,8 @@ export default function EditPost({
     }
   };
 
-  // no such post exists
-  if (!title && !content && _id && typeof window) {
+  // no such sondage exists
+  if (!title && !content && !answers.length && !_id && typeof window) {
     return (window.location.href = "/");
   }
 
@@ -123,20 +129,29 @@ export default function EditPost({
           <label>Title</label>
           <input
             type= "text"
-            placeholder= "Title of the post"
-            onChange={(e) => setPostTitle(e.target.value)}
-            value={postTitle ? postTitle : ""}
+            placeholder= "Title of the sondage"
+            onChange={(e) => setSondageTitle(e.target.value)}
+            value={sondageTitle ? sondageTitle : ""}
           />
         </div>
         <div className="form-group">
           <label>Content</label>
           <textarea
             name= "content"
-            placeholder= "Content of the post"
-            value={postContent ? postContent : ""}
-            onChange={(e) => setPostContent(e.target.value)}
+            placeholder= "Content of the sondage"
+            value={sondageContent ? sondageContent : ""}
+            onChange={(e) => setSondageContent(e.target.value)}
             cols={20}
             rows={8}
+          />
+        </div>
+        <div className="form-group">
+          <label>Answers</label>
+          <input
+            type="text"
+            placeholder='First answer'
+            onChange={(e) => setSondageAnswers([e.target.value])}
+            value={answers[1]}
           />
         </div>
         <div className="form-group">

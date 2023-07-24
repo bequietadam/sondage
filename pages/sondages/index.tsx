@@ -2,32 +2,35 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout";
 
 
-export default function AddPost() {
+export default function AddSondage() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
+  const [answers, setAnswers] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (title && content) {
+    if (title && description && answers.length) {
       try {
-        let response = await fetch("http://localhost:3000/api/posts/addPost", {
+        let response = await fetch("http://localhost:3000/api/sondages/addSondage", {
           method: "POST",
           body: JSON.stringify({
             title,
-            content,
+            description,
+            answers
           }),
           headers: {
             Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
+            "Description-Type": "application/json",
           },
         });
         response = await response.json();
         setTitle("");
-        setContent("");
+        setDescription("");
+        setAnswers([]);
         setError("");
-        setMessage("Post added successfully");
+        setMessage("Sondage added successfully");
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -46,25 +49,34 @@ export default function AddPost() {
           <label>Title</label>
           <input
             type= "text"
-            placeholder= "Title of the post"
+            placeholder= "Title of the sondage"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
         </div>
         <div className="form-group">
-          <label>Content</label>
+          <label>Description</label>
           <textarea
-            name= "content"
-            placeholder= "Content of the post"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            name= "description"
+            placeholder= "Description of the sondage"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             cols={20}
             rows={8}
           />
         </div>
         <div className="form-group">
+          <label>Answers</label>
+          <input
+            type="text"
+            placeholder='First answer'
+            onChange={(e) => setAnswers([e.target.value])}
+            value={answers[1]}
+          />
+        </div>
+        <div className="form-group">
           <button type="submit" className="submit_btn">
-            Add Post
+            Add Sondage
           </button>
         </div>
       </form>

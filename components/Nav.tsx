@@ -7,7 +7,10 @@ export default function Nav() {
       <div className={styles.navItems}>
         <ul>
           <li>
-            <a href="/">My Posts</a>
+            <a href="/">My Sondages & Posts</a>
+          </li>
+          <li>
+            <a href="/sondages">Add Sondage</a>
           </li>
           <li>
             <a href="/posts">Add Post</a>
