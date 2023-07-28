@@ -11,7 +11,6 @@ export default function AddSondage() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(title, description, answers);
     if (title && description && !!answers[2].length) {
       try {
         let response = await fetch("http://localhost:3000/api/sondages/addSondage", {
@@ -32,7 +31,6 @@ export default function AddSondage() {
         setAnswers([]);
         setError("");
         setMessage("Sondage added successfully");
-        console.log(response);
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -43,17 +41,14 @@ export default function AddSondage() {
 
   const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
     const newAnswersMap = answers.map((item, index) => {
-      console.log(item, index, answerIndex)
       if (index === answerIndex) {
         return event.target.value;
       } else {
         return item
       }
     })
-    console.log(newAnswersMap)
     setAnswers(newAnswersMap);
   }
-
 
 
   return (

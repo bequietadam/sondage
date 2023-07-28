@@ -13,7 +13,7 @@ type ContentPageProps = {
 
 type ResponseFromServer = {
   title: string;
-  content: string;
+  description: string;
   answers: string[];
   _id: string;
 };
@@ -36,7 +36,7 @@ export async function getStaticProps({
         sondage: {
           _id: responseFromServer._id,
           title: responseFromServer.title,
-          content: responseFromServer.content,
+          description: responseFromServer.description,
           answers: responseFromServer.answers,
         },
       },
@@ -48,7 +48,7 @@ export async function getStaticProps({
         sondage: {
           _id:"  ",
           title:"  ",
-          content: "  ",
+          description: "  ",
           answers: [],
         },
       },
@@ -74,17 +74,17 @@ export async function getStaticPaths() {
 
 
 export default function EditSondage({
-  sondage: { _id, title, content, answers },
+  sondage: { _id, title, description, answers },
 }: ContentPageProps) {
   const [sondageTitle, setSondageTitle] = useState(title);
-  const [sondageContent, setSondageContent] = useState(content);
+  const [sondageDescription, setSondageDescription] = useState(description);
   const [sondageAnswers, setSondageAnswers] = useState(answers)
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (sondageTitle && sondageContent && sondageAnswers.length === 3) {
+    if (sondageTitle && sondageDescription && sondageAnswers.length === 3) {
       try {
         let response = await fetch(
           "http://localhost:3000/api/sondages/editSondage?id=" + _id,
@@ -92,7 +92,7 @@ export default function EditSondage({
             method: "POST",
             body: JSON.stringify({
               title: sondageTitle,
-              content: sondageContent,
+              description: sondageDescription,
               answers: sondageAnswers,
             }),
             headers: {
@@ -103,7 +103,7 @@ export default function EditSondage({
         );
         response = await response.json();
         setSondageTitle("");
-        setSondageContent("");
+        setSondageDescription("");
         setSondageAnswers([]);
         setError("");
         setMessage("Sondage edited successfully");
@@ -116,7 +116,7 @@ export default function EditSondage({
   };
 
   // no such sondage exists
-  if (!title && !content && !answers.length && !_id && typeof window) {
+  if (!title && !description && !answers && !_id && typeof window) {
     return (window.location.href = "/");
   }
 
@@ -131,9 +131,6 @@ export default function EditSondage({
     }))
   }
 
-  useEffect(() => {
-    console.log(answers)
-  }, [answers])
 
   return (
     <Layout>
@@ -154,8 +151,8 @@ export default function EditSondage({
           <textarea
             name= "content"
             placeholder= "Content of the sondage"
-            value={sondageContent ? sondageContent : ""}
-            onChange={(e) => setSondageContent(e.target.value)}
+            value={sondageDescription ? sondageDescription : ""}
+            onChange={(e) => setSondageDescription(e.target.value)}
             cols={20}
             rows={8}
           />

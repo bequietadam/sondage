@@ -26,7 +26,6 @@ export async function getStaticProps({
     let response = await fetch(
       "http://localhost:3000/api/posts/getPost?id=" + params?.id
     );
-    console.log(response);
     let responseFromServer: ResponseFromServer = await response.json();
 
     return {
@@ -101,7 +100,7 @@ export default function EditPost({
         setPostContent("");
         setError("");
         setMessage("Post edited successfully");
-      } catch (errorMessage) {
+      } catch (errorMessage: any) {
         setError(errorMessage);
       }
     } else {

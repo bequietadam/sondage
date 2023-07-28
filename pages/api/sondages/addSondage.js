@@ -4,14 +4,13 @@ export default async (req, res) => {
   try {
     const client = await clientPromise;
     const db = client.db("sondages");
-    const { title, content, answers } = req.body;
+    const { title, description, answers } = JSON.parse(req.body);
 
     const sondage = await db.collection("sondages").insertOne({
       title,
-      content,
+      description,
       answers,
     });
-
     res.json(sondage);
   } catch (e) {
     console.error(e);
