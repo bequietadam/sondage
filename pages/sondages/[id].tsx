@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../components/Layout";
 
@@ -84,10 +84,10 @@ export default function EditSondage({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (sondageTitle && sondageContent && sondageAnswers.length) {
+    if (sondageTitle && sondageContent && sondageAnswers.length === 3) {
       try {
         let response = await fetch(
-          "http://localhost:3000/api/editSondage?id=" + _id,
+          "http://localhost:3000/api/sondages/editSondage?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({
@@ -120,6 +120,21 @@ export default function EditSondage({
     return (window.location.href = "/");
   }
 
+  
+  const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
+    setSondageAnswers(answers.map((item, index) => {
+      if (index === answerIndex) {
+        return event.target.value;
+      } else {
+        return item
+      }
+    }))
+  }
+
+  useEffect(() => {
+    console.log(answers)
+  }, [answers])
+
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="form">
@@ -150,8 +165,20 @@ export default function EditSondage({
           <input
             type="text"
             placeholder='First answer'
-            onChange={(e) => setSondageAnswers([e.target.value])}
+            onChange={(e) => updateAnswers(e, 0)}
+            value={answers[0]}
+          />
+          <input
+            type="text"
+            placeholder='First answer'
+            onChange={(e) => updateAnswers(e, 1)}
             value={answers[1]}
+          />
+          <input
+            type="text"
+            placeholder='First answer'
+            onChange={(e) => updateAnswers(e, 2)}
+            value={answers[2]}
           />
         </div>
         <div className="form-group">

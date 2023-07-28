@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 
 
 export default function AddSondage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [answers, setAnswers] = useState<string[]>(['', '', '']);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (title && description && answers.length) {
+    console.log(title, description, answers);
+    if (title && description && !!answers[2].length) {
       try {
         let response = await fetch("http://localhost:3000/api/sondages/addSondage", {
           method: "POST",
@@ -31,6 +32,7 @@ export default function AddSondage() {
         setAnswers([]);
         setError("");
         setMessage("Sondage added successfully");
+        console.log(response);
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -38,6 +40,20 @@ export default function AddSondage() {
       return setError("All fields are required");
     }
   };
+
+  const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
+    const newAnswersMap = answers.map((item, index) => {
+      console.log(item, index, answerIndex)
+      if (index === answerIndex) {
+        return event.target.value;
+      } else {
+        return item
+      }
+    })
+    console.log(newAnswersMap)
+    setAnswers(newAnswersMap);
+  }
+
 
 
   return (
@@ -70,8 +86,20 @@ export default function AddSondage() {
           <input
             type="text"
             placeholder='First answer'
-            onChange={(e) => setAnswers([e.target.value])}
+            onChange={(e) => updateAnswers(e, 0)}
+            value={answers[0]}
+          />
+          <input
+            type="text"
+            placeholder='First answer'
+            onChange={(e) => updateAnswers(e, 1)}
             value={answers[1]}
+          />
+          <input
+            type="text"
+            placeholder='First answer'
+            onChange={(e) => updateAnswers(e, 2)}
+            value={answers[2]}
           />
         </div>
         <div className="form-group">

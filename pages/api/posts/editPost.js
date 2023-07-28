@@ -8,6 +8,8 @@ export default async (req, res) => {
     const { id } = req.query;
     const { title, content } = req.body;
 
+    console.log(id)
+
     const post = await db.collection("posts").updateOne(
       {
         _id: ObjectId(id),
@@ -19,7 +21,7 @@ export default async (req, res) => {
         },
       }
     );
-
+    console.log(post);
     res.json(post);
   } catch (e) {
     console.error(e);

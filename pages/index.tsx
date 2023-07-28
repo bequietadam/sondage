@@ -12,26 +12,34 @@ export async function getServerSideProps() {
     let responsePosts = await fetch('http://localhost:3000/api/posts/getPosts');
     let posts = await responsePosts.json();
 
-    let responseSondages = await fetch('http://localhost:3000/api/sondages/getSondages');
-    let sondages = await responseSondages.json();
-    console.log('HERE IT COOOMES', sondages);
+    // let responseSondages = await fetch('http://localhost:3000/api/sondages/getSondages');
+    // let sondages = await responseSondages.json();
+    // console.log('HERE IT COOOMES', sondages);
+
+
 
     return {
       props: {
         posts: JSON.parse(JSON.stringify(posts)),
         // posts: [],
-        sondages: JSON.parse(JSON.stringify(sondages)),
+        // sondages: sondages.length > 0 ? JSON.parse(JSON.stringify(sondages)) : [],
         // sondages: [],
       },
     };
   } catch (e) {
     console.error(e);
+    return {
+      props: {
+        posts: [],
+        // sondages: [],
+      },
+    };
   }
 }
 
 export default function Posts(props: Props) {
   const [posts, setPosts] = useState<Post[]>(props.posts);
-  const [sondages, setSondages] = useState<Sondage[]>(props.sondages);
+  // const [sondages, setSondages] = useState<Sondage[]>(props.sondages);
 
 
 
@@ -81,7 +89,7 @@ export default function Posts(props: Props) {
   return (
     <Layout>
       <div className="posts-body">
-        <h1 className="posts-body-heading">Top 20 Added Sondages</h1>
+        {/* <h1 className="posts-body-heading">Top 20 Added Sondages</h1>
         {sondages.length > 0 ? (
           <ul className="posts-list">
             {sondages.map((sondage, index) => {
@@ -104,7 +112,7 @@ export default function Posts(props: Props) {
           </ul>
         ) : (
           <h2 className="posts-body-heading">Ooops! No sondages added so far</h2>
-        )}
+        )} */}
       </div>
       <div className="posts-body">
         <h1 className="posts-body-heading">Top 20 Added Posts</h1>

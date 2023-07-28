@@ -26,7 +26,7 @@ export async function getStaticProps({
     let response = await fetch(
       "http://localhost:3000/api/posts/getPost?id=" + params?.id
     );
-
+    console.log(response);
     let responseFromServer: ResponseFromServer = await response.json();
 
     return {
@@ -83,7 +83,7 @@ export default function EditPost({
     if (postTitle && postContent) {
       try {
         let response = await fetch(
-          "http://localhost:3000/api/editPost?id=" + _id,
+          "http://localhost:3000/api/posts/editPost?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({
@@ -101,7 +101,7 @@ export default function EditPost({
         setPostContent("");
         setError("");
         setMessage("Post edited successfully");
-      } catch (errorMessage: any) {
+      } catch (errorMessage) {
         setError(errorMessage);
       }
     } else {
@@ -110,14 +110,14 @@ export default function EditPost({
   };
 
   // no such post exists
-  if (!title && !content && _id && typeof window) {
+  if (!title && !content && !_id && typeof window) {
     return (window.location.href = "/");
   }
 
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="form">
-        {error ? <div className="alert-error">{error}</div> : null}
+        {/* {error ? <div className="alert-error">{error}</div> : null} */}
         {message ? <div className="alert-message">{message}</div> : null}
         <div className="form-group">
           <label>Title</label>
