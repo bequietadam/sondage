@@ -7,6 +7,7 @@ export default async (req, res) => {
     const db = client.db("sondages");
     const { id } = req.query;
     const { title, description, answers } = req.body;
+    
 
     const sondage = await db.collection("sondages").updateOne(
       {

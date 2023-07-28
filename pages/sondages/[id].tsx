@@ -14,9 +14,20 @@ type ContentPageProps = {
 type ResponseFromServer = {
   title: string;
   description: string;
-  answers: string[];
+  answers: Answer[];
   _id: string;
 };
+
+const emptyAnswer: Answer = {
+  answer: '',
+  count: 0,
+}
+
+const emptyAnswers = [
+  emptyAnswer,
+  emptyAnswer,
+  emptyAnswer,
+]
 
 export async function getStaticProps({
   params,
@@ -49,12 +60,13 @@ export async function getStaticProps({
           _id:"  ",
           title:"  ",
           description: "  ",
-          answers: [],
+          answers: emptyAnswers,
         },
       },
     };
   }
 }
+
 
 export async function getStaticPaths() {
   let sondages = await fetch("http://localhost:3000/api/sondages/getSondages");
@@ -84,7 +96,7 @@ export default function EditSondage({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (sondageTitle && sondageDescription && sondageAnswers.length === 3) {
+    if (sondageTitle && sondageDescription && sondageAnswers.length) {
       try {
         let response = await fetch(
           "http://localhost:3000/api/sondages/editSondage?id=" + _id,
@@ -102,10 +114,6 @@ export default function EditSondage({
           }
         );
         response = await response.json();
-        setSondageTitle("");
-        setSondageDescription("");
-        setSondageAnswers([]);
-        setError("");
         setMessage("Sondage edited successfully");
       } catch (errorMessage: any) {
         setError(errorMessage);
@@ -116,15 +124,18 @@ export default function EditSondage({
   };
 
   // no such sondage exists
-  if (!title && !description && !answers && !_id && typeof window) {
+  if (!title && !description && !answers.length && !_id && typeof window) {
     return (window.location.href = "/");
   }
 
   
   const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
-    setSondageAnswers(answers.map((item, index) => {
+    setSondageAnswers((state) => state.map((item, index) => {
       if (index === answerIndex) {
-        return event.target.value;
+        return {
+          answer: event.target.value,
+          count: 0, 
+        } as Answer;
       } else {
         return item
       }
@@ -163,19 +174,19 @@ export default function EditSondage({
             type="text"
             placeholder='First answer'
             onChange={(e) => updateAnswers(e, 0)}
-            value={answers[0]}
+            value={sondageAnswers[0].answer}
           />
           <input
             type="text"
             placeholder='First answer'
             onChange={(e) => updateAnswers(e, 1)}
-            value={answers[1]}
+            value={sondageAnswers[1].answer}
           />
           <input
             type="text"
             placeholder='First answer'
             onChange={(e) => updateAnswers(e, 2)}
-            value={answers[2]}
+            value={sondageAnswers[2].answer}
           />
         </div>
         <div className="form-group">
