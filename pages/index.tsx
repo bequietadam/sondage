@@ -41,9 +41,6 @@ export default function Posts(props: Props) {
   const [sondages, setSondages] = useState<Sondage[]>(props.sondages);
 
 
-
-
-
   const handleDeletePost = async (postId: string) => {
     try {
       let response = await fetch(
@@ -95,11 +92,12 @@ export default function Posts(props: Props) {
                 <li key={index} className="post-item">
                   <div className="post-item-details">
                     <h2>{sondage.title}</h2>
-
                     <p>{sondage.description}</p>
                   </div>
                   <div className="post-item-actions">
                     <a href={`/sondages/${sondage._id}`}>Edit</a>
+                    <button><a href={`/sondages/play/${sondage._id}`}>Play</a></button>
+                    <button><a href={`/sondages/result/${sondage._id}`}>Result</a></button>
                     <button onClick={() => handleDeleteSondage(sondage._id as string)}>
                       Delete
                     </button>
@@ -112,7 +110,9 @@ export default function Posts(props: Props) {
           <h2 className="posts-body-heading">Ooops! No sondages added so far</h2>
         )}
       </div>
-      <div className="posts-body">
+
+
+      {/* <div className="posts-body">
         <h1 className="posts-body-heading">Top 20 Added Posts</h1>
         {posts.length > 0 ? (
           <ul className="posts-list">
@@ -137,7 +137,7 @@ export default function Posts(props: Props) {
         ) : (
           <h2 className="posts-body-heading">Ooops! No posts added so far</h2>
         )}
-      </div>
+      </div> */}
       <style jsx>
         {`
           .posts-body {
@@ -169,6 +169,7 @@ export default function Posts(props: Props) {
           }
           .post-item-actions a {
             text-decoration: none;
+            margin-right: auto;
           }
         `}
       </style>

@@ -8,4 +8,5 @@ type Sondage = {
   title: string;
   description: string;
   answers: Answer[];
+  winner?: number; // = answer index
 };

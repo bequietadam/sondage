@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
 
 
 type PageParams = {
@@ -57,8 +57,8 @@ export async function getStaticProps({
     return {
       props: {
         sondage: {
-          _id:"  ",
-          title:"  ",
+          _id: "  ",
+          title: "  ",
           description: "  ",
           answers: emptyAnswers,
         },
@@ -82,30 +82,33 @@ export async function getStaticPaths() {
     }),
     fallback: false, // can also be true or 'blocking'
   };
-}
+} 
 
 
-export default function EditSondage({
+export default function PlaySondage({
   sondage: { _id, title, description, answers },
 }: ContentPageProps) {
-  const [sondageTitle, setSondageTitle] = useState(title);
-  const [sondageDescription, setSondageDescription] = useState(description);
-  const [sondageAnswers, setSondageAnswers] = useState(answers)
+  // const [sondageTitle, setSondageTitle] = useState(title);
+  // const [sondageDescription, setSondageDescription] = useState(description);
+  // const [sondageAnswers, setSondageAnswers] = useState(answers)
+
+  const [newCount, setNewCount] = useState(-1);
+  const [answerIndex, setAnswerIndex] = useState(-1);
+
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (sondageTitle && sondageDescription && sondageAnswers.length) {
+    if (answers[answerIndex].count !== newCount) {
       try {
         let response = await fetch(
-          "http://localhost:3000/api/sondages/editSondage?id=" + _id,
+          "http://localhost:3000/api/sondages/updateSondageCount?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({
-              title: sondageTitle,
-              description: sondageDescription,
-              answers: sondageAnswers,
+              newCount: newCount,
+              answerIndex: answerIndex,
             }),
             headers: {
               Accept: "application/json, text/plain, */*",
@@ -128,71 +131,66 @@ export default function EditSondage({
     return (window.location.href = "/");
   }
 
-  
-  const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
-    setSondageAnswers((state) => state.map((item, index) => {
-      if (index === answerIndex) {
-        return {
-          answer: event.target.value,
-          count: 0, 
-        } as Answer;
-      } else {
-        return item
-      }
-    }))
-  }
+
+  // const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
+  //   setSondageAnswers((state) => state.map((item, index) => {
+  //     if (index === answerIndex) {
+  //       return {
+  //         answer: event.target.value,
+  //         count: 0, 
+  //       } as Answer;
+  //     } else {
+  //       return item
+  //     }
+  //   }))
+  // }
+
+  const updateCount = ()
 
 
   return (
     <Layout>
-      <form onSubmit={handleSubmit} className="form">
+      <form
+        // onSubmit={handleSubmit}
+        className="form"
+      >
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
         <div className="form-group">
-          <label>Title</label>
-          <input
-            type= "text"
-            placeholder= "Title of the sondage"
-            onChange={(e) => setSondageTitle(e.target.value)}
-            value={sondageTitle ? sondageTitle : ""}
-          />
+          <h2>{title}</h2>
         </div>
         <div className="form-group">
-          <label>Content</label>
-          <textarea
-            name= "content"
-            placeholder= "Content of the sondage"
-            value={sondageDescription ? sondageDescription : ""}
-            onChange={(e) => setSondageDescription(e.target.value)}
-            cols={20}
-            rows={8}
-          />
+          <label>Description</label>
+          <p>{description}</p>
         </div>
         <div className="form-group">
           <label>Answers</label>
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 0)}
-            value={sondageAnswers[0].answer}
-          />
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 1)}
-            value={sondageAnswers[1].answer}
-          />
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 2)}
-            value={sondageAnswers[2].answer}
-          />
+          <div className="form-group__answer">
+            <input
+              type="checkbox"
+              name={answers[0].answer}
+              onChange={updateCount(0)}
+            />
+            <label>{answers[0].answer}</label>
+          </div>
+          <div className="form-group__answer">
+            <input
+              type="checkbox"
+              name={answers[1].answer}
+              onChange={updateCount(1)}
+            />
+            <label>{answers[0].answer}</label>
+          </div>
+          <div className="form-group__answer">
+            <input
+              type="checkbox"
+              name={answers[2].answer}
+              onChange={updateCount(2)}
+            />
+            <label>{answers[0].answer}</label>
+          </div>
         </div>
         <div className="form-group">
-          <button type="submit" className="submit_btn">
-            Update
-          </button>
         </div>
       </form>
       <style jsx>

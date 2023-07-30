@@ -117,6 +117,7 @@ export default function AddSondage() {
           .form-group label {
             display: block;
             margin-bottom: 10px;
+            font-style: bold;
           }
           .form-group input[type="text"] {
             padding: 10px;
