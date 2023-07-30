@@ -6,8 +6,9 @@ export default async (req, res) => {
     const client = await clientPromise;
     const db = client.db("sondages");
     const { id } = req.query;
-    const { newCount, answerIndex } = req.body;
+    const { answerIndex } = req.body;
     
+    console.log(answerIndex);
 
     const sondage = await db.collection("sondages").findOne({
       _id: ObjectId(id),
@@ -18,12 +19,14 @@ export default async (req, res) => {
       if (index === answerIndex) {
         return {
           answer: answer.answer,
-          count: newCount,
+          count: answer.count + 1,
         }
       } else {
         return answer
       }
     })
+
+    console.log('updatedAnswers: ', updatedAnswers);
 
     const updatedSondage = await db.collection("sondages").updateOne(
       {

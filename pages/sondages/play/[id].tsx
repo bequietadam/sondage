@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
+import { useRouter } from 'next/router';
 
 
 type PageParams = {
@@ -82,7 +83,7 @@ export async function getStaticPaths() {
     }),
     fallback: false, // can also be true or 'blocking'
   };
-} 
+}
 
 
 export default function PlaySondage({
@@ -98,16 +99,18 @@ export default function PlaySondage({
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  const router = useRouter()
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (answers[answerIndex].count !== newCount) {
+    if (!!answerIndex) {
+      console.log(answerIndex);
       try {
         let response = await fetch(
-          "http://localhost:3000/api/sondages/updateSondageCount?id=" + _id,
+          "http://localhost:3000/api/sondages/updateCount?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({
-              newCount: newCount,
               answerIndex: answerIndex,
             }),
             headers: {
@@ -117,12 +120,16 @@ export default function PlaySondage({
           }
         );
         response = await response.json();
-        setMessage("Sondage edited successfully");
+        setMessage("Vote sent");
+        router.push({
+          pathname: '/sondages/result/' + _id,
+        })
+        
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
     } else {
-      return setError("All fields are required");
+      return setError("No vote selected");
     }
   };
 
@@ -132,26 +139,12 @@ export default function PlaySondage({
   }
 
 
-  // const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
-  //   setSondageAnswers((state) => state.map((item, index) => {
-  //     if (index === answerIndex) {
-  //       return {
-  //         answer: event.target.value,
-  //         count: 0, 
-  //       } as Answer;
-  //     } else {
-  //       return item
-  //     }
-  //   }))
-  // }
-
-  const updateCount = ()
 
 
   return (
     <Layout>
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         className="form"
       >
         {error ? <div className="alert-error">{error}</div> : null}
@@ -166,31 +159,22 @@ export default function PlaySondage({
         <div className="form-group">
           <label>Answers</label>
           <div className="form-group__answer">
-            <input
-              type="checkbox"
-              name={answers[0].answer}
-              onChange={updateCount(0)}
-            />
-            <label>{answers[0].answer}</label>
-          </div>
-          <div className="form-group__answer">
-            <input
-              type="checkbox"
-              name={answers[1].answer}
-              onChange={updateCount(1)}
-            />
-            <label>{answers[0].answer}</label>
-          </div>
-          <div className="form-group__answer">
-            <input
-              type="checkbox"
-              name={answers[2].answer}
-              onChange={updateCount(2)}
-            />
-            <label>{answers[0].answer}</label>
+            {answers.map((answer, index) => {
+              return (
+                <div key={answer.answer} className="form-group__answer">
+                  <input
+                    type="checkbox"
+                    name={answers[0].answer}
+                    onChange={() => setAnswerIndex(index)}
+                  />
+                  <label>{answer.answer}: {answer.count} votes</label>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="form-group">
+          <button type="submit" className="submit_btn">Confirm vote</button>
         </div>
       </form>
       <style jsx>
@@ -204,10 +188,13 @@ export default function PlaySondage({
             margin-bottom: 10px;
             display: block;
           }
-          .form-group label {
+          .form-group__answer{
+
+          }
+          .form-group > label {
             display: block;
             margin-bottom: 10px;
-            font-style: bold;
+            font-weight: bold;
           }
           .form-group input[type="text"] {
             padding: 10px;
@@ -231,4 +218,4 @@ export default function PlaySondage({
       </style>
     </Layout>
   );
-}
+};

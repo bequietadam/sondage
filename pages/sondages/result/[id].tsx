@@ -146,7 +146,7 @@ export default function PlaySondage({
           .form-group__answer{
 
           }
-          .form-group label {
+          .form-group > label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
