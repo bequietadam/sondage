@@ -7,6 +7,8 @@ type Props = {
   sondages: Sondage[];
 }
 
+
+
 export async function getServerSideProps() {
   try {
     let responsePosts = await fetch('http://localhost:3000/api/posts/getPosts');
@@ -83,7 +85,7 @@ export default function Posts(props: Props) {
 
   return (
     <Layout>
-      <div className="posts-body">
+      <div className="posts-body ">
         <h1 className="posts-body-heading">Top 20 Added Sondages</h1>
         {sondages.length > 0 ? (
           <ul className="posts-list">
@@ -145,7 +147,7 @@ export default function Posts(props: Props) {
             margin: 10px auto;
           }
           .posts-body-heading {
-            font-family: sans-serif;
+            // font-family: sans-serif;
             margin: 0 auto 20px;
           }
           h2.posts-body-heading {

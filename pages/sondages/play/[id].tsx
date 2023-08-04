@@ -103,7 +103,7 @@ export default function PlaySondage({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!!answerIndex) {
+    if (answerIndex > -1) {
       console.log(answerIndex);
       try {
         let response = await fetch(
@@ -164,7 +164,7 @@ export default function PlaySondage({
                 <div key={answer.answer} className="form-group__answer">
                   <input
                     type="checkbox"
-                    name={answers[0].answer}
+                    name={answer.answer}
                     onChange={() => setAnswerIndex(index)}
                   />
                   <label>{answer.answer}: {answer.count} votes</label>
