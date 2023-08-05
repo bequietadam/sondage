@@ -143,12 +143,12 @@ export default function Posts(props: Props) {
       <style jsx>
         {`
           .posts-body {
-            width: 400px;
+            width: 100%;
             margin: 10px auto;
           }
           .posts-body-heading {
-            // font-family: sans-serif;
-            margin: 0 auto 20px;
+            margin: 0 auto 24px;
+            text-align: center;
           }
           h2.posts-body-heading {
             color: #ddd;
@@ -156,9 +156,9 @@ export default function Posts(props: Props) {
           .posts-list {
             list-style-type: none;
             display: block;
+            padding: 0 18%;
           }
           .post-item {
-            width: 100%;
             padding: 0 10px 10px;
             border: 1px solid #d5d5d5;
           }

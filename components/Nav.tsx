@@ -1,10 +1,9 @@
 import React from "react";
-import styles from "./styles/Nav.module.css";
 
 export default function Nav() {
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navItems}>
+    <nav className="navbar">
+      {/* <div className="navbar__container"> */}
         <ul>
           <li>
             <a href="/">All sondages</a>
@@ -13,30 +12,35 @@ export default function Nav() {
             <a href="/sondages">Add sondage</a>
           </li>
         </ul>
-      </div>
+        <h5 className="navbar__title">titlebar</h5>
+      {/* </div> */}
       <style jsx>
         {`
-          .navbar {
-            border-bottom: 1px #d4d4d4;
+          nav {
             width: 100%;
             display: flex;
-            justify-content: center;
-            border-bottom: 1px solid #d4d5d5;
+            justify-content: space-betweeen;
           }
 
-          .navItems ul {
+          nav ul {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             list-style-type: none;
           }
 
-          .navItems ul li {
+          nav ul li {
             margin-right: 10px;
           }
 
-          .navItems ul li a {
+          nav ul li a {
             text-decoration: none;
+          }
+
+          nav h5 {
+            margin-left: auto;
+            padding-right: 20px;
+            text-transform: uppercase;
           }
         `}
       </style>
