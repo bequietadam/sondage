@@ -6,13 +6,13 @@ export default function Nav() {
       {/* <div className="navbar__container"> */}
         <ul>
           <li>
-            <a href="/">All sondages</a>
+            <a href="/">home</a>
           </li>
           <li>
-            <a href="/sondages">Add sondage</a>
+            <a href="/sondages">create</a>
           </li>
         </ul>
-        <h5 className="navbar__title">titlebar</h5>
+        <h5 className="navbar__title">sondage</h5>
       {/* </div> */}
       <style jsx>
         {`

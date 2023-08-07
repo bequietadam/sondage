@@ -27,7 +27,7 @@ export default function Layout(props: any) {
             margin-bottom: -14px;
             border: 3px solid #000;
             border-radius: 6px;
-            background: white;
+            background: lightgreen;
             z-index: 1;
           }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
+import Button from '../../components/Button';
 
 
 export default function AddSondage() {
@@ -98,9 +99,9 @@ export default function AddSondage() {
           />
         </div>
         <div className="form-group">
-          <button type="submit" className="submit_btn">
+          <Button type="submit" className="submit_btn">
             Add Sondage
-          </button>
+          </Button>
         </div>
       </form>
       <style jsx>

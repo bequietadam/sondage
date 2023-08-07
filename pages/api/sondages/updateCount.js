@@ -8,7 +8,6 @@ export default async (req, res) => {
     const { id } = req.query;
     const { answerIndex } = req.body;
     
-    console.log(answerIndex);
 
     const sondage = await db.collection("sondages").findOne({
       _id: ObjectId(id),
@@ -26,7 +25,6 @@ export default async (req, res) => {
       }
     })
 
-    console.log('updatedAnswers: ', updatedAnswers);
 
     const updatedSondage = await db.collection("sondages").updateOne(
       {

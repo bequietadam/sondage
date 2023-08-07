@@ -113,7 +113,7 @@ export default function PlaySondage({
         className="form"
       >
         <div className="form-group">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </div>
         <div className="form-group">
           <label>Description</label>
@@ -150,6 +150,7 @@ export default function PlaySondage({
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
+            font-style: italic;
           }
           .form-group label.winner {
             background: lightgreen;

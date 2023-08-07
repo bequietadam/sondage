@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
 import { useRouter } from 'next/router';
+import Button from '../../../components/Button';
 
 
 type PageParams = {
@@ -104,7 +105,6 @@ export default function PlaySondage({
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (answerIndex > -1) {
-      console.log(answerIndex);
       try {
         let response = await fetch(
           "http://localhost:3000/api/sondages/updateCount?id=" + _id,
@@ -150,7 +150,7 @@ export default function PlaySondage({
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
         <div className="form-group">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </div>
         <div className="form-group">
           <label>Description</label>
@@ -174,7 +174,7 @@ export default function PlaySondage({
           </div>
         </div>
         <div className="form-group">
-          <button type="submit" className="submit_btn">Confirm vote</button>
+          <Button type="submit" className="submit_btn">Confirm vote</Button>
         </div>
       </form>
       <style jsx>
@@ -195,6 +195,7 @@ export default function PlaySondage({
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
+            font-style: italic;
           }
           .form-group input[type="text"] {
             padding: 10px;
