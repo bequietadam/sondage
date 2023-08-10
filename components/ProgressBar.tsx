@@ -50,6 +50,7 @@ export default function ProgressBar({
             width: 100%;
             height: 100%;
             background: linear-gradient(to right, orchid 0%, #DE3163 ${((100 / ((100 / maxProgressValue) * progressValue)) * (100 / ((100 / maxProgressValue) * progressValue))) * ((100 / maxProgressValue) * progressValue)}%);
+            opacity: 0.33;
           }
           .progressbar p {
             position: relative;

@@ -11,11 +11,20 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <style jsx global>
         {`
-        body, html{
-          height: 100%;
+        html {
+          display: flex;
+          min-height: 100%;
+        }
+        body {
+          display: flex;
+          margin: 0;
+          flex: 1 1 100%;
         }
         #__next {
-          height: 100%;
+          display: flex;
+          flex: 1 1 100%;
+          padding: 8px;
+          box-sizing: border-box;
         }
       `}</style>
       <style jsx>
@@ -25,7 +34,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
         main {
           background: cornsilk;
-          height: 100%;
+          flex: 1 1 100%;
         }
       `}</style>
     </main>

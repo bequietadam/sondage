@@ -146,15 +146,6 @@ export default function EditPost({
       </form>
       <style jsx>
         {`
-          .form {
-            width: 400px;
-            margin: 10px auto;
-          }
-          .form-group {
-            width: 100%;
-            margin-bottom: 10px;
-            display: block;
-          }
           .form-group label {
             display: block;
             margin-bottom: 10px;

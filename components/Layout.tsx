@@ -43,6 +43,16 @@ export default function Layout(props: any) {
             padding: 24px 48px 30px;
 
           }
+          
+          .form {
+            max-width: 400px;
+            margin: 10px auto;
+          }
+          .form-group {
+            width: 100%;
+            margin-bottom: 10px;
+            display: block;
+          }
         `}
       </style>
     </>

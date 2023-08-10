@@ -145,15 +145,6 @@ export default function PlaySondage({
       </div>
       <style jsx>
         {`
-          .form {
-            width: 400px;
-            margin: 10px auto;
-          }
-          .form-group {
-            width: 100%;
-            margin-bottom: 10px;
-            display: block;
-          }
           .form-group__answer{
 
           }
