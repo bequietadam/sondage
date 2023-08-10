@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
+import ProgressBar from '../../../components/ProgressBar';
 
 
 type PageParams = {
@@ -9,6 +10,7 @@ type PageParams = {
 
 type ContentPageProps = {
   sondage: Sondage;
+  maxCount: number;
 };
 
 type ResponseFromServer = {
@@ -41,6 +43,8 @@ export async function getStaticProps({
 
     let responseFromServer: ResponseFromServer = await response.json();
 
+    const maxCount = Math.max(...responseFromServer.answers.map(i => i.count));
+
     return {
       // Passed to the page component as props
       props: {
@@ -50,6 +54,7 @@ export async function getStaticProps({
           description: responseFromServer.description,
           answers: responseFromServer.answers,
         },
+        maxCount: maxCount,
       },
     };
   } catch (e) {
@@ -62,6 +67,7 @@ export async function getStaticProps({
           description: "  ",
           answers: emptyAnswers,
         },
+        maxCount: 0,
       },
     };
   }
@@ -87,6 +93,7 @@ export async function getStaticPaths() {
 
 export default function PlaySondage({
   sondage: { _id, title, description, answers },
+  maxCount,
 }: ContentPageProps) {
   // const [sondageTitle, setSondageTitle] = useState(title);
   // const [sondageDescription, setSondageDescription] = useState(description);
@@ -103,6 +110,7 @@ export default function PlaySondage({
   if (!title && !description && !answers.length && !_id && typeof window) {
     return (window.location.href = "/");
   }
+
 
 
 
@@ -123,9 +131,12 @@ export default function PlaySondage({
           <label>Answers</label>
           {answers.map((answer, index) => {
             return (
-              <div key={answer.answer} className="form-group__answer">
-                <p>{answer.answer}: {answer.count} votes</p>
-              </div>
+              <ProgressBar
+                maxProgressValue={maxCount}
+                progressValue={answer.count}
+                progressValueUnit="votes"
+                text={answer.answer}
+              />
             );
           })}
         </div>
