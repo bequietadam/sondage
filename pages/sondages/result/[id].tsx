@@ -127,7 +127,7 @@ export default function PlaySondage({
           <label>Description</label>
           <p>{description}</p>
         </div>
-        <div className="form-group">
+        <div className="form-group answers">
           <label>Answers</label>
           {answers.map((answer, index) => {
             return (
@@ -145,8 +145,8 @@ export default function PlaySondage({
       </div>
       <style jsx>
         {`
-          .form-group__answer{
-
+          .form-group.answer{
+            margin-top: 30px;
           }
           .form-group > label {
             display: block;

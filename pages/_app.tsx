@@ -1,13 +1,18 @@
 import type { AppProps } from 'next/app'
 import localFont from 'next/font/local';
 
-const myFont = localFont({
+const ArgentumNovus = localFont({
   src: './fonts/Argentum-Novus-Black.ttf.woff'
 });
 
+const ConcertOneBasic = localFont({
+  src: './fonts/concertone-regular.woff'
+})
+
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className={myFont.className}>
+    <main className={ConcertOneBasic.className}>
       <Component {...pageProps} />
       <style jsx global>
         {`
@@ -19,6 +24,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           display: flex;
           margin: 0;
           flex: 1 1 100%;
+          font-family: ${ConcertOneBasic.style.fontFamily};
         }
         #__next {
           display: flex;
@@ -26,11 +32,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           padding: 8px;
           box-sizing: border-box;
         }
-      `}</style>
-      <style jsx>
-        {`
-        div, h1, h2, h3, h4, h5, h6 {
-          font-family: 'Argentum-Novus-Black';
+        h1 {
+          font-size: 3.6em;
+          // line-height: 3em;
+          margin: 0.4em 0;
         }
         main {
           background: cornsilk;

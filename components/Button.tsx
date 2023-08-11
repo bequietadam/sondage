@@ -20,9 +20,7 @@ export default function Button({ onClick = () => { }, children, className, type 
         {`
           button {
             background: orchid;
-            font-family: serif;
             font-weight: 900;
-            font-size: 18px;
             border: 2px solid #000;
             border-radius: 12px;
             box-shadow: 3px 3px 0px #000;

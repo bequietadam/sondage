@@ -27,7 +27,7 @@ export default function Layout(props: any) {
             margin-bottom: -14px;
             border: 3px solid #000;
             border-radius: 6px;
-            background: lightgreen;
+            background: #7FFFD4;
             z-index: 1;
           }
 
@@ -42,6 +42,20 @@ export default function Layout(props: any) {
             border-radius: 6px;
             padding: 24px 48px 30px;
 
+
+            label {
+              opacity: 0.6;
+              margin-bottom: 6px;
+            }
+            p {
+              margin-top: 0;
+              // line-height: 0.9em;
+            }
+
+          }
+
+          .layout .content label {
+            opacity: 0.1;
           }
           
           .form {

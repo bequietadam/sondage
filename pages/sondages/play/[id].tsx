@@ -180,7 +180,7 @@ export default function PlaySondage({
       <style jsx>
         {`
           .form-group__answer{
-
+            margin-top: 30px;
           }
           .form-group > label {
             display: block;

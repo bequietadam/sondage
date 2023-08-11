@@ -33,16 +33,22 @@ export default function ProgressBar({
             border-radius: 40px;
             width: 100%;
             // height: 40px;
-            margin-bottom: 20px;
+            margin: 12px 0 20px;
             position:relative;
+            box-sizing: border-box;
           }
           .progressbar__progress {
+            width: 10%;
             width: ${(100 / maxProgressValue) * progressValue}%;
             overflow: hidden;
             height: 100%;
             border-radius: 40px;
             position:absolute;
             box-sizing: border-box;
+            transition: all 0.6s ease-in-out;
+          }
+          .progressbar__progress.loaded {
+            width: ${(100 / maxProgressValue) * progressValue}%;
           }
           .progressbar__gradient {
             position:absolute;
@@ -54,7 +60,7 @@ export default function ProgressBar({
           }
           .progressbar p {
             position: relative;
-            padding: 10px 18px;
+            padding: 10px 18px 12px;
             margin: 0;
             width: 100%;
             height: 100%;
