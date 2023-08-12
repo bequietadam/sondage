@@ -1,13 +1,14 @@
-import React, { ReactChildren } from 'react';
+import React, { ReactChildren, ReactElement } from 'react';
 
 type ButtonProps = {
   onClick?: () => void;
-  children: ReactChildren | string;
+  children: ReactElement | string;
   className?: string;
+  size?: 'big' | 'small';
   type?: 'submit' | 'button';
 }
 
-export default function Button({ onClick = () => { }, children, className, type = 'button'}: ButtonProps) {
+export default function Button({ onClick = () => { }, children, className, size, type = 'button' }: ButtonProps) {
 
 
 
@@ -19,22 +20,45 @@ export default function Button({ onClick = () => { }, children, className, type 
       <style jsx>
         {`
           button {
-            background: orchid;
+            position:relative;
+            background: linear-gradient(to right, orchid 0%, #DE3163 100%);
             font-weight: 900;
-            border: 2px solid #000;
-            border-radius: 12px;
-            box-shadow: 3px 3px 0px #000;
-            opacity: 0.9;
-            padding: 18px 24px;
-            transition: box-shadow .06s ease-in-out, opacity .12s ease-out;
+            color: white;
+            right: 3px;
+            border: 0;
+            border: ${size === 'small' ? '0px' : '3px'} solid #DE3163;
+            border-radius: 40px;
+            box-shadow: ${size === 'small' ? '0px 0px 0px #DE3163' : '3px 3px 0px #DE3163'};
+            opacity: 0.8;
+            padding: ${size === 'small' ? '4px 12px 6px' : '10px 18px 12px'};
+            transition: opacity .12s ease-out;
           }
-          button:hover {
+          // button:before {
+          //   content: "";
+          //   z-index: -1;
+          //   position: absolute;
+          //   top: 6px;
+          //   left: 6px;
+          //   width: 100%;
+          //   height: 100%;
+          //   background: linear-gradient(45deg, orchid 0%, #DE3163 100% );
+          //   opacity: 0.7;
+          //   // filter: blur(20px)
+          //   border-radius: inherit;
+          // }
+
+
+          button:active, button:hover {
             opacity: 1;
           }
           button:active {
-            box-shadow: 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px #DE3163;
+            top: 1px;
+            left: 0px;
           }
-
+          button > a,button > :link, button > a:visited {
+            color: white;
+          }
         `}
       </style>
     </>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
+import Button from '../components/Button';
 
 
 type Props = {
@@ -86,7 +87,7 @@ export default function Posts(props: Props) {
   return (
     <Layout>
       <div className="posts-body ">
-        <h1 className="posts-body-heading">Top 20 Added Sondages</h1>
+        <h1 className="posts-body-heading">All sondage created:</h1>
         {sondages.length > 0 ? (
           <ul className="posts-list">
             {sondages.map((sondage, index) => {
@@ -98,11 +99,11 @@ export default function Posts(props: Props) {
                   </div>
                   <div className="post-item-actions">
                     <a href={`/sondages/${sondage._id}`}>Edit</a>
-                    <button><a href={`/sondages/play/${sondage._id}`}>Play</a></button>
-                    <button><a href={`/sondages/result/${sondage._id}`}>Result</a></button>
-                    <button onClick={() => handleDeleteSondage(sondage._id as string)}>
+                    <Button size="small"><a href={`/sondages/play/${sondage._id}`}>Play</a></Button>
+                    <Button size="small"><a href={`/sondages/result/${sondage._id}`}>Result</a></Button>
+                    <Button size="small" onClick={() => handleDeleteSondage(sondage._id as string)}>
                       Delete
-                    </button>
+                    </Button>
                   </div>
                 </li>
               );
@@ -146,28 +147,31 @@ export default function Posts(props: Props) {
             width: 100%;
             margin: 10px auto;
           }
-          .posts-body-heading {
-            margin: 0 auto 24px;
-            text-align: center;
-          }
           h2.posts-body-heading {
             color: #ddd;
           }
           .posts-list {
             list-style-type: none;
             display: block;
-            padding: 0 18%;
+            padding: 6px 0 12px;
           }
           .post-item {
             padding: 0 10px 10px;
             border: 1px solid #d5d5d5;
+            margin-bottom: -1px;
+          }
+          .post-item:last-child {
+            margin-bottom: 0px;
           }
           .post-item h2 {
-            margin: 10px
+            margin: 10px 0px;
           }
           .post-item-actions {
             display: flex;
             justify-content: space-between;
+          }
+          .post-item-actions :global(button) {
+            margin-left: 2px;
           }
           .post-item-actions a {
             text-decoration: none;

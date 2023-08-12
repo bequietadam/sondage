@@ -57,11 +57,12 @@ export default function AddSondage() {
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
+        <h1>Create your new sondage</h1>
         <div className="form-group">
           <label>Title</label>
           <input
-            type= "text"
-            placeholder= "Title of the sondage"
+            type="text"
+            placeholder="Title of the sondage"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
@@ -69,8 +70,8 @@ export default function AddSondage() {
         <div className="form-group">
           <label>Description</label>
           <textarea
-            name= "description"
-            placeholder= "Description of the sondage"
+            name="description"
+            placeholder="Description of the sondage"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             cols={20}
@@ -98,7 +99,7 @@ export default function AddSondage() {
             value={answers[2]}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group button">
           <Button type="submit" className="submit_btn">
             Add Sondage
           </Button>
@@ -106,6 +107,9 @@ export default function AddSondage() {
       </form>
       <style jsx>
         {`
+          .form-group {
+            padding-bottom: 12px;
+          }
           .form-group > label {
             display: block;
             margin-bottom: 10px;
@@ -118,6 +122,11 @@ export default function AddSondage() {
           .form-group textarea {
             padding: 10px;
             width: 100%;
+          }
+          .form-group.button {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px 0;
           }
           .alert-error {
             width: 100%;

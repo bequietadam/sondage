@@ -17,8 +17,9 @@ export default function Layout(props: any) {
           .layout {
             display: flex;
             flex-direction: column;
-            padding: 60px 18%;
+            padding: 60px 60px 120px;
             max-width: 800px;
+            min-width: 480px;
             margin: auto;
           }
 
@@ -40,7 +41,7 @@ export default function Layout(props: any) {
             background: white;
             border: 3px solid #000;
             border-radius: 6px;
-            padding: 24px 48px 30px;
+            padding: 12px 48px 30px;
 
 
             label {

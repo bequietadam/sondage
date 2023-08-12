@@ -16,9 +16,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <style jsx global>
         {`
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }        
         html {
           display: flex;
           min-height: 100%;
+          box-sizing: border-box;
         }
         body {
           display: flex;
@@ -32,14 +36,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           padding: 8px;
           box-sizing: border-box;
         }
+        main {
+          display: flex;
+          background: cornsilk;
+          flex: 1 1 100%;
+        }
         h1 {
           font-size: 3.6em;
           // line-height: 3em;
           margin: 0.4em 0;
-        }
-        main {
-          background: cornsilk;
-          flex: 1 1 100%;
         }
       `}</style>
     </main>

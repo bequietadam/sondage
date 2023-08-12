@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../components/Layout";
+import Button from '../../components/Button';
 
 
 type PageParams = {
@@ -57,8 +58,8 @@ export async function getStaticProps({
     return {
       props: {
         sondage: {
-          _id:"  ",
-          title:"  ",
+          _id: "  ",
+          title: "  ",
           description: "  ",
           answers: emptyAnswers,
         },
@@ -128,13 +129,13 @@ export default function EditSondage({
     return (window.location.href = "/");
   }
 
-  
+
   const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
     setSondageAnswers((state) => state.map((item, index) => {
       if (index === answerIndex) {
         return {
           answer: event.target.value,
-          count: 0, 
+          count: 0,
         } as Answer;
       } else {
         return item
@@ -148,11 +149,12 @@ export default function EditSondage({
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
+        <h1>Edit your sondage</h1>
         <div className="form-group">
           <label>Title</label>
           <input
-            type= "text"
-            placeholder= "Title of the sondage"
+            type="text"
+            placeholder="Title of the sondage"
             onChange={(e) => setSondageTitle(e.target.value)}
             value={sondageTitle ? sondageTitle : ""}
           />
@@ -160,8 +162,8 @@ export default function EditSondage({
         <div className="form-group">
           <label>Content</label>
           <textarea
-            name= "content"
-            placeholder= "Content of the sondage"
+            name="content"
+            placeholder="Content of the sondage"
             value={sondageDescription ? sondageDescription : ""}
             onChange={(e) => setSondageDescription(e.target.value)}
             cols={20}
@@ -189,14 +191,17 @@ export default function EditSondage({
             value={sondageAnswers[2].answer}
           />
         </div>
-        <div className="form-group">
-          <button type="submit" className="submit_btn">
+        <div className="form-group button">
+          <Button type="submit" className="submit_btn">
             Update
-          </button>
+          </Button>
         </div>
       </form>
       <style jsx>
         {`
+          .form-group {
+            padding-bottom: 12px;
+          }
           .form-group >label {
             display: block;
             margin-bottom: 10px;
@@ -209,6 +214,11 @@ export default function EditSondage({
           .form-group textarea {
             padding: 10px;
             width: 100%;
+          }
+          .form-group.button {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px 0;
           }
           .alert-error {
             width: 100%;

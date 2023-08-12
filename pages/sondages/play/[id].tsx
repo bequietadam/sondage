@@ -158,12 +158,12 @@ export default function PlaySondage({
         </div>
         <div className="form-group">
           <label>Answers</label>
-          <div className="form-group__answer">
+          <div className="form-group answers">
             {answers.map((answer, index) => {
               return (
                 <div key={answer.answer} className="form-group__answer">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name={answer.answer}
                     onChange={() => setAnswerIndex(index)}
                   />
@@ -173,14 +173,14 @@ export default function PlaySondage({
             })}
           </div>
         </div>
-        <div className="form-group">
+        <div className="form-group button">
           <Button type="submit" className="submit_btn">Confirm vote</Button>
         </div>
       </form>
       <style jsx>
         {`
-          .form-group__answer{
-            margin-top: 30px;
+          .form-group.answers{
+            margin-bottom: 12px;
           }
           .form-group > label {
             display: block;
@@ -195,6 +195,11 @@ export default function PlaySondage({
           .form-group textarea {
             padding: 10px;
             width: 100%;
+          }
+          .form-group.button {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px 0;
           }
           .alert-error {
             width: 100%;

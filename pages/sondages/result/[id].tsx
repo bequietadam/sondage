@@ -145,8 +145,8 @@ export default function PlaySondage({
       </div>
       <style jsx>
         {`
-          .form-group.answer{
-            margin-top: 30px;
+          .form-group.answers{
+            padding-bottom: 12px;
           }
           .form-group > label {
             display: block;
