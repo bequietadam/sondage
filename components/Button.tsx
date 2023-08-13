@@ -26,26 +26,13 @@ export default function Button({ onClick = () => { }, children, className, size,
             color: white;
             right: 3px;
             border: 0;
-            border: ${size === 'small' ? '0px' : '3px'} solid #DE3163;
+            border: ${size === 'small' ? '2px solid orchid' : '3px solid #DE3163'};
             border-radius: 40px;
             box-shadow: ${size === 'small' ? '0px 0px 0px #DE3163' : '3px 3px 0px #DE3163'};
             opacity: 0.8;
             padding: ${size === 'small' ? '4px 12px 6px' : '10px 18px 12px'};
             transition: opacity .12s ease-out;
           }
-          // button:before {
-          //   content: "";
-          //   z-index: -1;
-          //   position: absolute;
-          //   top: 6px;
-          //   left: 6px;
-          //   width: 100%;
-          //   height: 100%;
-          //   background: linear-gradient(45deg, orchid 0%, #DE3163 100% );
-          //   opacity: 0.7;
-          //   // filter: blur(20px)
-          //   border-radius: inherit;
-          // }
 
 
           button:active, button:hover {
@@ -53,11 +40,13 @@ export default function Button({ onClick = () => { }, children, className, size,
           }
           button:active {
             box-shadow: 0px 0px 0px #DE3163;
-            top: 1px;
-            left: 0px;
+            top: 3px;
+            right: 0px;
+          }button > :global(a) {
+            text-decoration: none;
           }
-          button > a,button > :link, button > a:visited {
-            color: white;
+          button > :global(a), button > :global(a):visited {
+            // color: white;
           }
         `}
       </style>

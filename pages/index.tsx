@@ -1,10 +1,10 @@
+'use client'
 import { useState } from 'react';
 import Layout from '../components/Layout';
-import Button from '../components/Button';
+import SondagesList from '../components/SondagesList';
 
 
 type Props = {
-  posts: Post[];
   sondages: Sondage[];
 }
 
@@ -12,8 +12,6 @@ type Props = {
 
 export async function getServerSideProps() {
   try {
-    let responsePosts = await fetch('http://localhost:3000/api/posts/getPosts');
-    let posts = await responsePosts.json();
 
     let responseSondages = await fetch('http://localhost:3000/api/sondages/getSondages');
     let sondages = await responseSondages.json();
@@ -22,8 +20,6 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        posts: JSON.parse(JSON.stringify(posts)),
-        // posts: [],
         sondages: JSON.parse(JSON.stringify(sondages)),
         // sondages: [],
       },
@@ -32,153 +28,22 @@ export async function getServerSideProps() {
     console.error(e);
     return {
       props: {
-        posts: [],
         sondages: [],
       },
     };
   }
 }
 
-export default function Posts(props: Props) {
-  const [posts, setPosts] = useState<Post[]>(props.posts);
+export default function Home(props: Props) {
   const [sondages, setSondages] = useState<Sondage[]>(props.sondages);
-
-
-  const handleDeletePost = async (postId: string) => {
-    try {
-      let response = await fetch(
-        "http://localhost:3000/api/posts/deletePost?id=" + postId,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      response = await response.json();
-      window.location.reload();
-    } catch (error) {
-      console.log("An error occurred while deleting ", error);
-    }
-  };
-
-  const handleDeleteSondage = async (sondageId: string) => {
-    try {
-      let response = await fetch(
-        "http://localhost:3000/api/sondages/deleteSondage?id=" + sondageId,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      response = await response.json();
-      window.location.reload();
-    } catch (error) {
-      console.log("An error occurred while deleting sondage ", error);
-    }
-  };
-
 
 
   return (
     <Layout>
-      <div className="posts-body ">
-        <h1 className="posts-body-heading">All sondage created:</h1>
-        {sondages.length > 0 ? (
-          <ul className="posts-list">
-            {sondages.map((sondage, index) => {
-              return (
-                <li key={index} className="post-item">
-                  <div className="post-item-details">
-                    <h2>{sondage.title}</h2>
-                    <p>{sondage.description}</p>
-                  </div>
-                  <div className="post-item-actions">
-                    <a href={`/sondages/${sondage._id}`}>Edit</a>
-                    <Button size="small"><a href={`/sondages/play/${sondage._id}`}>Play</a></Button>
-                    <Button size="small"><a href={`/sondages/result/${sondage._id}`}>Result</a></Button>
-                    <Button size="small" onClick={() => handleDeleteSondage(sondage._id as string)}>
-                      Delete
-                    </Button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <h2 className="posts-body-heading">Ooops! No sondages added so far</h2>
-        )}
+      <div className="home">
+        <h1 className="heading">All sondage created:</h1>
+        <SondagesList sondages={sondages}/>
       </div>
-
-
-      {/* <div className="posts-body">
-        <h1 className="posts-body-heading">Top 20 Added Posts</h1>
-        {posts.length > 0 ? (
-          <ul className="posts-list">
-            {posts.map((post, index) => {
-              return (
-                <li key={index} className="post-item">
-                  <div className="post-item-details">
-                    <h2>{post.title}</h2>
-
-                    <p>{post.content}</p>
-                  </div>
-                  <div className="post-item-actions">
-                    <a href={`/posts/${post._id}`}>Edit</a>
-                    <button onClick={() => handleDeletePost(post._id as string)}>
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <h2 className="posts-body-heading">Ooops! No posts added so far</h2>
-        )}
-      </div> */}
-      <style jsx>
-        {`
-          .posts-body {
-            width: 100%;
-            margin: 10px auto;
-          }
-          h2.posts-body-heading {
-            color: #ddd;
-          }
-          .posts-list {
-            list-style-type: none;
-            display: block;
-            padding: 6px 0 12px;
-          }
-          .post-item {
-            padding: 0 10px 10px;
-            border: 1px solid #d5d5d5;
-            margin-bottom: -1px;
-          }
-          .post-item:last-child {
-            margin-bottom: 0px;
-          }
-          .post-item h2 {
-            margin: 10px 0px;
-          }
-          .post-item-actions {
-            display: flex;
-            justify-content: space-between;
-          }
-          .post-item-actions :global(button) {
-            margin-left: 2px;
-          }
-          .post-item-actions a {
-            text-decoration: none;
-            margin-right: auto;
-          }
-        `}
-      </style>
     </Layout>
   );
 }

@@ -18,8 +18,8 @@ export default function ProgressBar({
   return (
     <>
       <div className="progressbar">
-        <div className="progressbar__progress">
-          <div className="progressbar__gradient"></div>
+        <div className="progress">
+          <div className="gradient"></div>
         </div>
         <p>{text + ': ' + progressValue + progressValueUnit}</p>
       </div>
@@ -37,7 +37,7 @@ export default function ProgressBar({
             position:relative;
             box-sizing: border-box;
           }
-          .progressbar__progress {
+          .progressbar .progress {
             width: 10%;
             width: ${(100 / maxProgressValue) * progressValue}%;
             overflow: hidden;
@@ -47,10 +47,10 @@ export default function ProgressBar({
             box-sizing: border-box;
             transition: all 0.6s ease-in-out;
           }
-          .progressbar__progress.loaded {
+          .progressbar .progress.loaded {
             width: ${(100 / maxProgressValue) * progressValue}%;
           }
-          .progressbar__gradient {
+          .progressbar .gradient {
             position:absolute;
             right: 0;
             width: 100%;

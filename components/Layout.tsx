@@ -29,6 +29,7 @@ export default function Layout(props: any) {
             border: 3px solid #000;
             border-radius: 6px;
             background: #7FFFD4;
+            background: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
             z-index: 1;
           }
 
@@ -54,19 +55,25 @@ export default function Layout(props: any) {
             }
 
           }
-
           .layout .content label {
             opacity: 0.1;
           }
+
           
-          .form {
+          .layout .form {
             max-width: 400px;
             margin: 10px auto;
           }
-          .form-group {
+          .layout .form-group {
             width: 100%;
             margin-bottom: 10px;
             display: block;
+          }
+
+
+          .layout .home {
+            width: 100%;
+            margin: 10px auto;
           }
         `}
       </style>

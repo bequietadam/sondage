@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from "react";
 
 export default function Nav() {
@@ -6,10 +7,10 @@ export default function Nav() {
       {/* <div className="navbar__container"> */}
         <ul>
           <li>
-            <a href="/">home</a>
+            <Link href="/">home</Link>
           </li>
           <li>
-            <a href="/sondages">create</a>
+            <Link href="/sondages">create</Link>
           </li>
         </ul>
         <h5 className="navbar__title">sondage</h5>

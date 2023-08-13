@@ -121,7 +121,7 @@ export default function PlaySondage({
         );
         response = await response.json();
         setMessage("Vote sent");
-        router.push({
+        router.replace({
           pathname: '/sondages/result/' + _id,
         })
         
