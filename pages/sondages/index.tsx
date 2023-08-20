@@ -6,12 +6,16 @@ import Button from '../../components/Button';
 export default function AddSondage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [answers, setAnswers] = useState<string[]>(['', '', '']);
+  const [answers, setAnswers] = useState<string[]>(['coconut'])
+  const [newAnswer, setNewAnswer] = useState('');
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (!!newAnswer) {
+      onClickAddAnswer()
+    }
     if (title && description && !!answers[2].length) {
       try {
         let response = await fetch("http://localhost:3000/api/sondages/addSondage", {
@@ -40,16 +44,32 @@ export default function AddSondage() {
     }
   };
 
-  const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
-    const newAnswersMap = answers.map((item, index) => {
-      if (index === answerIndex) {
-        return event.target.value;
-      } else {
-        return item
-      }
+  // const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
+  //   const newAnswersMap = answers.map((item, index) => {
+  //     if (index === answerIndex) {
+  //       return event.target.value;
+  //     } else {
+  //       return item
+  //     }
+  //   })
+  //   setAnswers(newAnswersMap);
+  // }
+
+
+  const onClickAddAnswer = () => {
+    setAnswers(s => [...s, newAnswer])
+    setNewAnswer('')
+  };
+
+  const onClickRemoveAnswer = (i: number) => {
+    setAnswers(state => {
+      state.splice(i, 1);
+      const newState = state;
+      return [...newState];
     })
-    setAnswers(newAnswersMap);
   }
+
+
 
 
   return (
@@ -78,29 +98,44 @@ export default function AddSondage() {
             rows={8}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group answers">
           <label>Answers</label>
+          {!!answers.length ? answers.map((a, i) =>
+            <div className="answer">
+              <input
+                disabled={true}
+                key={a + i}
+                type="text"
+                value={a}
+              />
+              <Button
+                onClick={() => onClickRemoveAnswer(i)}
+                size="small"
+                className="remove"
+              >
+                remove
+              </Button>
+            </div>
+          ) : null}
           <input
+            key="newAnswer"
+            onChange={(e) => setNewAnswer(e.target.value)}
             type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 0)}
-            value={answers[0]}
+            placeholder='New answer'
+            value={newAnswer}
           />
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 1)}
-            value={answers[1]}
-          />
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 2)}
-            value={answers[2]}
-          />
-        </div>
+        </div >
         <div className="form-group button">
-          <Button type="submit" className="submit_btn">
+          <Button
+            disabled={!newAnswer}
+            onClick={onClickAddAnswer}
+          >
+            another answer pls
+          </Button>
+          <Button
+            className="submit_btn"
+            type="submit"
+          >
             Add Sondage
           </Button>
         </div>
@@ -127,6 +162,23 @@ export default function AddSondage() {
             display: flex;
             justify-content: flex-end;
             padding: 12px 0;
+          }
+          .form-group.answers {
+
+          }
+          .form-group.answers .answer {
+            position: relative;
+          }
+          .form-group.answers input:disabled {
+            margin-bottom: 12px;
+          }
+          .form-group.answers :global(button) {
+            position: absolute;
+            top: 4px;
+            right: 6px;
+          }
+          .form-group :global(button) {
+            margin-left: 12px;
           }
           .alert-error {
             width: 100%;

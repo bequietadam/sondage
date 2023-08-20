@@ -1,20 +1,26 @@
 import React, { ReactChildren, ReactElement } from 'react';
 
 type ButtonProps = {
-  onClick?: () => void;
   children: ReactElement | string;
   className?: string;
+  disabled?: boolean;
+  onClick?: () => void;
   size?: 'big' | 'small';
   type?: 'submit' | 'button';
 }
 
-export default function Button({ onClick = () => { }, children, className, size, type = 'button' }: ButtonProps) {
+export default function Button({ onClick = () => { }, children, className, disabled = false, size, type = 'button' }: ButtonProps) {
 
 
 
   return (
     <>
-      <button className={className} onClick={onClick} type={type}>
+      <button
+        className={className}
+        disabled={disabled}
+        onClick={onClick}
+        type={type}
+      >
         {children}
       </button>
       <style jsx>
@@ -47,6 +53,11 @@ export default function Button({ onClick = () => { }, children, className, size,
           }
           button > :global(a), button > :global(a):visited {
             // color: white;
+          }
+
+          
+          button:disabled {
+            opacity: 0.3;
           }
         `}
       </style>
