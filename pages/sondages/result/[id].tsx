@@ -132,6 +132,7 @@ export default function PlaySondage({
           {answers.map((answer, index) => {
             return (
               <ProgressBar
+                key={answer + index.toString()}
                 maxProgressValue={maxCount}
                 progressValue={answer.count}
                 progressValueUnit="votes"

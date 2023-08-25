@@ -1,4 +1,5 @@
 import react from 'react';
+import { motion } from 'framer-motion';
 
 
 type ProgressBarProps = {
@@ -9,18 +10,67 @@ type ProgressBarProps = {
 }
 
 
+
+
 export default function ProgressBar({
   maxProgressValue, progressValue, progressValueUnit, text
 }: ProgressBarProps) {
 
 
+  const transitions = {
+    opacity: {
+      delay: 0.3,
+      easing: 'ease-in',
+      duration: 0.6,
+    },
+    width: {
+      delay: 0.5,
+      duration: 1,
+      easing: 'ease-in-out',
+      // type: 'spring'
+    },
+    x: {
+      duration: 0.6,
+      easing: 'ease-out',
+    }
+  };
+
+  const variants = {
+    init: {
+      opacity: 0,
+      width: "8%",
+      x: -40,
+      transition: transitions,
+    },
+    anim: {
+      opacity: 1,
+      width: ((100 / maxProgressValue) * progressValue) + '%',
+      x: 0,
+      transition: transitions,
+    }
+  }
 
   return (
     <>
       <div className="progressbar">
-        <div className="progress">
+        <motion.div
+          className="progress"
+          animate="anim"
+          initial="init"
+          style={{
+            borderRadius: 40,
+            boxSizing: 'border-box',
+            overflow: 'hidden',
+            height: '100%',
+            position: 'absolute',
+            // opacity: 0,
+            // width: '8%',
+            // x: -40,
+          }}
+          variants={variants}
+        >
           <div className="gradient"></div>
-        </div>
+        </motion.div>
         <p>{text + ': ' + progressValue + progressValueUnit}</p>
       </div>
       <style jsx>
@@ -36,19 +86,6 @@ export default function ProgressBar({
             margin: 12px 0 20px;
             position:relative;
             box-sizing: border-box;
-          }
-          .progressbar .progress {
-            width: 10%;
-            width: ${(100 / maxProgressValue) * progressValue}%;
-            overflow: hidden;
-            height: 100%;
-            border-radius: 40px;
-            position:absolute;
-            box-sizing: border-box;
-            transition: all 0.6s ease-in-out;
-          }
-          .progressbar .progress.loaded {
-            width: ${(100 / maxProgressValue) * progressValue}%;
           }
           .progressbar .gradient {
             position:absolute;
