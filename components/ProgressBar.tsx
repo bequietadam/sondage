@@ -19,19 +19,24 @@ export default function ProgressBar({
 
   const transitions = {
     opacity: {
-      delay: 0.3,
-      easing: 'ease-in',
-      duration: 0.6,
+      delay: 0.4,
+      duration: 0.5,
+      ease: 'easeIn',
     },
     width: {
+      type: "spring",
+      damping: 10 + ((progressValue / maxProgressValue) * 12), // will override duration
+      mass: 0.6, // will override duration
+      // mass: progressValue / maxProgressValue,
+      // stiffness: 50, // will override duration
+
       delay: 0.5,
-      duration: 1,
-      easing: 'ease-in-out',
-      // type: 'spring'
+      // duration: 1,
+      // ease: 'circOut',
     },
     x: {
       duration: 0.6,
-      easing: 'ease-out',
+      ease: 'easeOut',
     }
   };
 
