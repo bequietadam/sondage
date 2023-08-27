@@ -29,6 +29,8 @@ export default function ProgressBar({
       mass: 0.6, // will override duration
       // mass: progressValue / maxProgressValue,
       // stiffness: 50, // will override duration
+      restDelta: 0.001,
+      restSpeed: 0.001,
 
       delay: 0.5,
       // duration: 1,

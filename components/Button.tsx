@@ -11,12 +11,12 @@ type ButtonProps = {
 
 export default function Button({ onClick = () => { }, children, className, disabled = false, size, type = 'button' }: ButtonProps) {
 
-
+  const classNames = size === 'small' ? className + ' ' + size : className;
 
   return (
     <>
       <button
-        className={className}
+        className={classNames}
         disabled={disabled}
         onClick={onClick}
         type={type}
@@ -32,23 +32,35 @@ export default function Button({ onClick = () => { }, children, className, disab
             color: white;
             right: 3px;
             border: 0;
-            border: ${size === 'small' ? '2px solid orchid' : '3px solid #DE3163'};
+            border: 3px solid #DE3163;
             border-radius: 40px;
-            box-shadow: ${size === 'small' ? '0px 0px 0px #DE3163' : '3px 3px 0px #DE3163'};
+            box-shadow: 3px 3px 0px #DE3163;
             opacity: 0.8;
-            padding: ${size === 'small' ? '4px 12px 6px' : '10px 18px 12px'};
+            padding: 10px 18px 12px;
             transition: opacity .12s ease-out;
           }
 
+          button.small {
+            border: 2px solid #DE3163;
+            box-shadow: 0px 0px 0px #DE3163;
+            padding: 4px 12px 6px;
+            right: 0px;
+          }
 
           button:active, button:hover {
             opacity: 1;
           }
+
           button:active {
             box-shadow: 0px 0px 0px #DE3163;
             top: 3px;
             right: 0px;
-          }button > :global(a) {
+          }
+          button.small:active {
+            top: 0;
+            left: 2px;
+          }
+          button > :global(a) {
             text-decoration: none;
           }
           button > :global(a), button > :global(a):visited {

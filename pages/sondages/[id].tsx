@@ -91,13 +91,18 @@ export default function EditSondage({
 }: ContentPageProps) {
   const [sondageTitle, setSondageTitle] = useState(title);
   const [sondageDescription, setSondageDescription] = useState(description);
-  const [sondageAnswers, setSondageAnswers] = useState(answers)
+  const [sondageAnswers, setSondageAnswers] = useState(answers);
+  const [newAnswer, setNewAnswer] = useState('');
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (sondageTitle && sondageDescription && sondageAnswers.length) {
+    
+    if (!!newAnswer) {
+      onClickAddAnswer() //to try
+    }
+    if (sondageTitle && sondageDescription && sondageAnswers.length > 1 && !newAnswer) { // try sondage check
       try {
         let response = await fetch(
           "http://localhost:3000/api/sondages/editSondage?id=" + _id,
@@ -115,7 +120,8 @@ export default function EditSondage({
           }
         );
         response = await response.json();
-        setMessage("Sondage edited successfully");
+        setMessage("Sondage edited successfully!");
+        setError('')
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -125,14 +131,15 @@ export default function EditSondage({
   };
 
   // no such sondage exists
-  if (!title && !description && !answers.length && !_id && typeof window) {
-    return (window.location.href = "/");
-  }
+  // if (!title && !description && !answers.length && !_id && typeof window) {
+  //   return (window.location.href = "/");
+  // }
 
 
   const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
     setSondageAnswers((state) => state.map((item, index) => {
       if (index === answerIndex) {
+
         return {
           answer: event.target.value,
           count: 0,
@@ -143,6 +150,18 @@ export default function EditSondage({
     }))
   }
 
+  const onClickAddAnswer = () => {
+    setSondageAnswers(s => [...s, { answer: newAnswer, count: 0 }])
+    setNewAnswer('')
+  };
+
+  const onClickRemoveAnswer = (i: number) => {
+    setSondageAnswers(state => {
+      state.splice(i, 1);
+      const newState = state;
+      return [...newState];
+    })
+  }
 
   return (
     <Layout>
@@ -156,7 +175,7 @@ export default function EditSondage({
             type="text"
             placeholder="Title of the sondage"
             onChange={(e) => setSondageTitle(e.target.value)}
-            value={sondageTitle ? sondageTitle : ""}
+            value={sondageTitle}
           />
         </div>
         <div className="form-group">
@@ -164,36 +183,51 @@ export default function EditSondage({
           <textarea
             name="content"
             placeholder="Content of the sondage"
-            value={sondageDescription ? sondageDescription : ""}
+            value={sondageDescription}
             onChange={(e) => setSondageDescription(e.target.value)}
             cols={20}
             rows={8}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group answers">
           <label>Answers</label>
+          {!!sondageAnswers.length ? sondageAnswers.map((a, i) =>
+            <div className="answer" key={a.answer + i}>
+              <input
+                disabled={true}
+                key={a.answer + i}
+                type="text"
+                value={a.answer}
+              />
+              <Button
+                onClick={() => onClickRemoveAnswer(i)}
+                size="small"
+                className="remove"
+              >
+                remove
+              </Button>
+            </div>
+          ) : null}
           <input
+            key="newAnswer"
+            onChange={(e) => setNewAnswer(e.target.value)}
             type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 0)}
-            value={sondageAnswers[0].answer}
+            placeholder='New answer'
+            value={newAnswer}
           />
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 1)}
-            value={sondageAnswers[1].answer}
-          />
-          <input
-            type="text"
-            placeholder='First answer'
-            onChange={(e) => updateAnswers(e, 2)}
-            value={sondageAnswers[2].answer}
-          />
-        </div>
+        </div >
         <div className="form-group button">
-          <Button type="submit" className="submit_btn">
-            Update
+          <Button
+            disabled={!newAnswer}
+            onClick={onClickAddAnswer}
+          >
+            another answer pls
+          </Button>
+          <Button
+            className="submit_btn"
+            type="submit"
+          >
+            Save changes
           </Button>
         </div>
       </form>
@@ -202,7 +236,7 @@ export default function EditSondage({
           .form-group {
             padding-bottom: 12px;
           }
-          .form-group >label {
+          .form-group > label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
@@ -220,18 +254,25 @@ export default function EditSondage({
             justify-content: flex-end;
             padding: 12px 0;
           }
-          .alert-error {
-            width: 100%;
-            color: red;
-            margin-bottom: 10px;
+          .form-group.answers {
+
           }
-          .alert-message {
-            width: 100%;
-            color: green;
-            margin-bottom: 10px;
+          .form-group.answers .answer {
+            position: relative;
+          }
+          .form-group.answers input:disabled {
+            margin-bottom: 12px;
+          }
+          .form-group.answers :global(button) {
+            position: absolute;
+            top: 4px;
+            right: 6px;
+          }
+          .form-group :global(button) {
+            margin-left: 12px;
           }
         `}
-      </style>
+      </style> 
     </Layout>
   );
 }

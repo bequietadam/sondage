@@ -48,9 +48,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         main {
           display: flex;
           background: cornsilk;
-          background: linear-gradient(150deg, cornsilk 0%, #FAD5A5 180%);
-          background-size: 300% 300%;
-          animation: gradient 15s ease infinite;
+          background: linear-gradient(150deg, cornsilk 0%, #FAD5A5 100%);
+          background-size: 400% 400%;
+          animation: gradient 24s ease infinite;
           flex: 1 1 100%;
         }
         h1 {
@@ -59,15 +59,27 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           margin: 0.4em 0;
         }
 
+        
+        .alert-error {
+          width: 100%;
+          color: red;
+          position: absolute;
+        }
+        .alert-message {
+          width: 100%;
+          color: green;
+          position: absolute;
+        }
+
         @keyframes gradient {
           0% {
-            background-position: 0% 50%;
+            background-position: 0% 10%;
           }
           50% {
             background-position: 100% 50%;
           }
           100% {
-            background-position: 0% 50%;
+            background-position: 0% 10%;
           }
       `}</style>
     </main>

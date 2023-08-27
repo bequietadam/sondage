@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 export default function AddSondage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [answers, setAnswers] = useState<string[]>(['coconut'])
+  const [answers, setAnswers] = useState<string[]>([])
   const [newAnswer, setNewAnswer] = useState('');
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -16,7 +16,7 @@ export default function AddSondage() {
     if (!!newAnswer) {
       onClickAddAnswer()
     }
-    if (title && description && !!answers[2].length) {
+    if (title && description && answers.length > 1 && !newAnswer) {
       try {
         let response = await fetch("http://localhost:3000/api/sondages/addSondage", {
           method: "POST",
@@ -35,7 +35,8 @@ export default function AddSondage() {
         setDescription("");
         setAnswers([]);
         setError("");
-        setMessage("Sondage added successfully");
+        setMessage("Sondage added successfully!");
+        setError('')
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -43,17 +44,6 @@ export default function AddSondage() {
       return setError("All fields are required");
     }
   };
-
-  // const updateAnswers = (event: React.ChangeEvent<HTMLInputElement>, answerIndex: number) => {
-  //   const newAnswersMap = answers.map((item, index) => {
-  //     if (index === answerIndex) {
-  //       return event.target.value;
-  //     } else {
-  //       return item
-  //     }
-  //   })
-  //   setAnswers(newAnswersMap);
-  // }
 
 
   const onClickAddAnswer = () => {
@@ -101,10 +91,9 @@ export default function AddSondage() {
         <div className="form-group answers">
           <label>Answers</label>
           {!!answers.length ? answers.map((a, i) =>
-            <div className="answer">
+            <div className="answer" key={a + i}>
               <input
                 disabled={true}
-                key={a + i}
                 type="text"
                 value={a}
               />
@@ -179,16 +168,6 @@ export default function AddSondage() {
           }
           .form-group :global(button) {
             margin-left: 12px;
-          }
-          .alert-error {
-            width: 100%;
-            color: red;
-            margin-bottom: 10px;
-          }
-          .alert-message {
-            width: 100%;
-            color: green;
-            margin-bottom: 10px;
           }
         `}
       </style>

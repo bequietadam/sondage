@@ -124,11 +124,11 @@ export default function PlaySondage({
           <h1>{title}</h1>
         </div>
         <div className="form-group">
-          <label>Description</label>
+          {/* <label>Description</label> */}
           <p>{description}</p>
         </div>
         <div className="form-group answers">
-          <label>Answers</label>
+          {/* <label>Answers</label> */}
           {answers.map((answer, index) => {
             return (
               <ProgressBar
@@ -155,22 +155,11 @@ export default function PlaySondage({
             font-weight: bold;
             font-style: italic;
           }
-          .form-group label.winner {
-            background: lightgreen;
+          .form-group > h1 {
+            margin-bottom: 0.1em;
           }
-          .form-group textarea {
-            padding: 10px;
-            width: 100%;
-          }
-          .alert-error {
-            width: 100%;
-            color: red;
-            margin-bottom: 10px;
-          }
-          .alert-message {
-            width: 100%;
-            color: green;
-            margin-bottom: 10px;
+          .form-group > p {
+            margin-bottom: 60px;
           }
         `}
       </style>
