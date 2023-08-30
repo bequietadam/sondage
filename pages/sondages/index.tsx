@@ -106,20 +106,20 @@ export default function AddSondage() {
               </Button>
             </div>
           ) : null}
-          <input
+          {answers.length < 12 && <input
             key="newAnswer"
             onChange={(e) => setNewAnswer(e.target.value)}
             type="text"
             placeholder='New answer'
             value={newAnswer}
-          />
+          />}
         </div >
         <div className="form-group button">
           <Button
-            disabled={!newAnswer}
+            disabled={!newAnswer && answers.length >= 12}
             onClick={onClickAddAnswer}
           >
-            another answer pls
+            {answers.length >= 12 ? 'another answer pls' : 'already enough answers'}
           </Button>
           <Button
             className="submit_btn"

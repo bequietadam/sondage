@@ -208,20 +208,20 @@ export default function EditSondage({
               </Button>
             </div>
           ) : null}
-          <input
+          {sondageAnswers.length < 12 && <input
             key="newAnswer"
             onChange={(e) => setNewAnswer(e.target.value)}
             type="text"
             placeholder='New answer'
             value={newAnswer}
-          />
+          />}
         </div >
         <div className="form-group button">
           <Button
-            disabled={!newAnswer}
+            disabled={!newAnswer && sondageAnswers.length >= 12}
             onClick={onClickAddAnswer}
           >
-            another answer pls
+            {sondageAnswers.length >= 12 ? 'another answer pls' : 'already enough answers'}
           </Button>
           <Button
             className="submit_btn"

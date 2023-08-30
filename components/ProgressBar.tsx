@@ -78,7 +78,7 @@ export default function ProgressBar({
         >
           <div className="gradient"></div>
         </motion.div>
-        <p>{text + ': ' + progressValue + progressValueUnit}</p>
+        <p>{text + ': ' + progressValue + ' ' + progressValueUnit}</p>
       </div>
       <style jsx>
         {`

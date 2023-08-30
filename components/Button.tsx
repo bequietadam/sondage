@@ -41,7 +41,7 @@ export default function Button({ onClick = () => { }, children, className, disab
           }
 
           button.small {
-            border: 2px solid #DE3163;
+            border: 2px solid orchid;
             box-shadow: 0px 0px 0px #DE3163;
             padding: 4px 12px 6px;
             right: 0px;
