@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Button from '../../components/Button';
+import InputText from '../../components/InputText';
+import { AnimatePresence, motion } from 'framer-motion';
+import css from 'styled-jsx/css';
 
-
+const { className, styles } = css.resolve`
+div {
+  position: relative;
+}
+`
 export default function AddSondage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -91,35 +98,43 @@ export default function AddSondage() {
         <div className="form-group answers">
           <label>Answers</label>
           {!!answers.length ? answers.map((a, i) =>
-            <div className="answer" key={a + i}>
-              <input
-                disabled={true}
-                type="text"
-                value={a}
-              />
-              <Button
-                onClick={() => onClickRemoveAnswer(i)}
-                size="small"
-                className="remove"
-              >
-                remove
-              </Button>
-            </div>
+            <AnimatePresence>
+              <motion.div className={className} key={a} 
+        initial={{ opacity: 0, height: 0, }}
+        animate={{ opacity: 1, height: '40px' }}
+        exit={{ opacity: 0, height: 0,  }}>
+                <InputText
+                  disabled={true}
+                  onChange={(event) => setNewAnswer(event.target.value)}
+                  value={a}
+                />
+                <Button
+                  onClick={() => onClickRemoveAnswer(i)}
+                  size="small"
+                  className="remove"
+                >
+                  remove
+                </Button>
+              </motion.div>
+            </AnimatePresence>
           ) : null}
-          {answers.length < 12 && <input
-            key="newAnswer"
-            onChange={(e) => setNewAnswer(e.target.value)}
-            type="text"
-            placeholder='New answer'
-            value={newAnswer}
-          />}
+          {answers.length < 12 &&
+            <div className="answer new">
+              <InputText
+                key="newAnswer"
+                onChange={(event) => setNewAnswer(event.target.value)}
+                placeholder='New answer'
+                value={newAnswer}
+              />
+            </div>
+          }
         </div >
         <div className="form-group button">
           <Button
             disabled={!newAnswer && answers.length >= 12}
             onClick={onClickAddAnswer}
           >
-            {answers.length >= 12 ? 'another answer pls' : 'already enough answers'}
+            {answers.length >= 12 ? 'already enough answers' : 'another answer pls'}
           </Button>
           <Button
             className="submit_btn"
@@ -129,6 +144,7 @@ export default function AddSondage() {
           </Button>
         </div>
       </form>
+      {styles}
       <style jsx>
         {`
           .form-group {
@@ -153,20 +169,20 @@ export default function AddSondage() {
             padding: 12px 0;
           }
           .form-group.answers {
-
-          }
-          .form-group.answers .answer {
-            position: relative;
           }
           .form-group.answers input:disabled {
             margin-bottom: 12px;
           }
-          .form-group.answers :global(button) {
-            position: absolute;
-            top: 4px;
-            right: 6px;
+          .form-group.answers input:last-child {
+            margin-top: 30px;
           }
-          .form-group :global(button) {
+          .form-group.answers  :global(button) {
+            position: absolute;
+            top: 5px;
+            right: 6px;
+            z-index: ;
+          }
+          .form-group.button :global(button) {
             margin-left: 12px;
           }
         `}

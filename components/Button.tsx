@@ -58,7 +58,7 @@ export default function Button({ onClick = () => { }, children, className, disab
           }
           button.small:active {
             top: 0;
-            left: 2px;
+            right: 2px;
           }
           button > :global(a) {
             text-decoration: none;

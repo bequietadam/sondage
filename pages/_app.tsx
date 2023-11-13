@@ -59,6 +59,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           margin: 0.4em 0;
         }
 
+        input, textarea {
+          font-family: monospace;
+        }
+
         
         .alert-error {
           width: 100%;

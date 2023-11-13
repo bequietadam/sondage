@@ -3,7 +3,7 @@ import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
 import { useRouter } from 'next/router';
 import Button from '../../../components/Button';
-import RadioButton from '../../../components/RadioButton';
+import InputRadio from '../../../components/InputRadio';
 
 
 type PageParams = {
@@ -161,7 +161,7 @@ export default function PlaySondage({
           <div className="form-group answers">
             {answers.map((answer, index) => {
               return (
-                <RadioButton checked={answerIndex === index} name="play" text={answer.answer} key={answer.answer + index} onClick={() => setAnswerIndex(index)} />
+                <InputRadio checked={answerIndex === index} name="play" text={answer.answer} key={answer.answer + index} onClick={() => setAnswerIndex(index)} />
               );
             })}
           </div>

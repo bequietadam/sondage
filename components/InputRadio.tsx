@@ -2,7 +2,7 @@ import react from 'react';
 import { motion } from 'framer-motion';
 
 
-type RadioButtonProps = {
+type InputRadioProps = {
   checked: boolean;
   name: string;
   onClick: () => void;
@@ -12,9 +12,9 @@ type RadioButtonProps = {
 
 
 
-export default function RadioButton({
+export default function InputRadio({
   checked, name, onClick, text
-}: RadioButtonProps) {
+}: InputRadioProps) {
 
 
   const transitionsAnim = {
