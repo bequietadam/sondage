@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../components/Layout";
 import Button from '../../components/Button';
+import InputText from '../../components/InputText';
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 type PageParams = {
@@ -96,6 +98,9 @@ export default function EditSondage({
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  const titleTextarea = useRef<HTMLTextAreaElement>(null);
+
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     
@@ -163,55 +168,69 @@ export default function EditSondage({
     })
   }
 
+  useEffect(() => {
+    if (titleTextarea.current === null) {
+      return;
+    }
+    titleTextarea.current.style.height = 'inherit';
+    titleTextarea.current.style.height = `${titleTextarea.current.scrollHeight}.px`;
+  }, [titleTextarea, sondageTitle])
+
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
-        <h1>Edit your sondage</h1>
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            type="text"
+        {/* <h1>Edit your sondage</h1> */}
+        <div className="form-group title">
+          {/* <label>Title</label> */}
+          <textarea
+            // type="text"
+            ref={titleTextarea}
             placeholder="Title of the sondage"
             onChange={(e) => setSondageTitle(e.target.value)}
             value={sondageTitle}
+            cols={20}
+            rows={1}
           />
         </div>
-        <div className="form-group">
-          <label>Content</label>
+        <div className="form-group description">
+          {/* <label>Description</label> */}
           <textarea
             name="content"
             placeholder="Content of the sondage"
             value={sondageDescription}
             onChange={(e) => setSondageDescription(e.target.value)}
-            cols={20}
-            rows={8}
           />
         </div>
         <div className="form-group answers">
-          <label>Answers</label>
+          {/* <label>Answers</label> */}
           {!!sondageAnswers.length ? sondageAnswers.map((a, i) =>
-            <div className="answer" key={a.answer + i}>
-              <input
-                disabled={true}
-                key={a.answer + i}
-                type="text"
-                value={a.answer}
-              />
-              <Button
-                onClick={() => onClickRemoveAnswer(i)}
-                size="small"
-                className="remove"
-              >
-                remove
-              </Button>
-            </div>
+            <AnimatePresence>
+              <motion.div style={{
+                position: 'relative'
+              }} key={a.answer}
+                initial={{ opacity: 0, height: 0, }}
+                animate={{ opacity: 1, height: '40px' }}
+                exit={{ opacity: 0, height: 0, }}>
+                <InputText
+                  disabled={true}
+                  onChange={(event) => setNewAnswer(event.target.value)}
+                  value={a.answer}
+                />
+                <Button
+                  onClick={() => onClickRemoveAnswer(i)}
+                  size="small"
+                  className="remove"
+                >
+                  remove
+                </Button>
+              </motion.div>
+            </AnimatePresence >
           ) : null}
-          {sondageAnswers.length < 12 && <input
+          {sondageAnswers.length < 12 && <InputText
             key="newAnswer"
             onChange={(e) => setNewAnswer(e.target.value)}
-            type="text"
             placeholder='New answer'
             value={newAnswer}
           />}
@@ -221,7 +240,7 @@ export default function EditSondage({
             disabled={!newAnswer && sondageAnswers.length >= 12}
             onClick={onClickAddAnswer}
           >
-            {sondageAnswers.length >= 12 ? 'another answer pls' : 'already enough answers'}
+            {sondageAnswers.length < 12 ? 'another answer pls' : 'already enough answers'}
           </Button>
           <Button
             className="submit_btn"
@@ -236,18 +255,31 @@ export default function EditSondage({
           .form-group {
             padding-bottom: 12px;
           }
+          .form-group.description {
+            padding-bottom: 48px;
+          }
           .form-group > label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
           }
-          .form-group input[type="text"] {
+          .form-group.title textarea {
             padding: 10px;
             width: 100%;
+            border: 2px dashed lightgray;
+            border-radius: 22px;
+            font-size: 3.6em;
+            font-family: inherit;
+            margin: .4em 0 0;
+            resize: none;
           }
           .form-group textarea {
-            padding: 10px;
+            padding: 15px 10px 10px;
             width: 100%;
+            border-radius: 22px;
+            border: 2px dashed lightgray;
+            box-shadow: none;
+            resize: none;
           }
           .form-group.button {
             display: flex;
@@ -265,7 +297,7 @@ export default function EditSondage({
           }
           .form-group.answers :global(button) {
             position: absolute;
-            top: 4px;
+            top: 5px;
             right: 6px;
           }
           .form-group :global(button) {

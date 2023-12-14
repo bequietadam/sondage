@@ -90,7 +90,7 @@ export default function InputRadio({
           className="progress"
           animate={!!checked ? 'anim' : 'init'}
           style={{
-            borderRadius: 40,
+            borderRadius: 20,
             boxSizing: 'border-box',
             overflow: 'hidden',
             height: '100%',
@@ -119,7 +119,6 @@ export default function InputRadio({
             
           }
           input[type="radio"] {
-            // background: blue;
             position: absolute;
             width: 100%;
             height: 100%;
@@ -130,8 +129,6 @@ export default function InputRadio({
             z-index: 2;
             border-radius: 40px;
             background-color: transparent;
-            // opacity: 0;
-            // pointer-events: none;
             cursor: pointer; 
           }
           .radio .gradient {

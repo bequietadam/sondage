@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import react from 'react';
+import { motion } from 'framer-motion';
 import Button from './Button';
 import useHandleDeleteSondage from '../hooks/useHandleDelete';
 
@@ -42,14 +43,15 @@ export default function SondagesList({ sondages }: SondagesListProps) {
             list-style-type: none;
             display: block;
             padding: 6px 0 12px;
+            border: 2px dashed orchid;
+            border-radius: 40px;
           }
           .sondage-list .item {
             padding: 0 10px 10px;
-            border: 1px solid #d5d5d5;
-            margin-bottom: -1px;
+            border-top: 2px dashed orchid;
           }
-          .sondage-list .item:last-child {
-            margin-bottom: 0px;
+          .sondage-list .item:first-child {
+            border: none;
           }
           .sondage-list .item h2 {
             margin: 10px 0px;

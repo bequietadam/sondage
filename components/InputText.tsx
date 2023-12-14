@@ -5,6 +5,7 @@ import css from 'styled-jsx/css';
 
 type InputTextProps = {
   disabled?: boolean;
+  name?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   value: string;

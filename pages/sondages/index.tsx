@@ -3,13 +3,8 @@ import Layout from "../../components/Layout";
 import Button from '../../components/Button';
 import InputText from '../../components/InputText';
 import { AnimatePresence, motion } from 'framer-motion';
-import css from 'styled-jsx/css';
 
-const { className, styles } = css.resolve`
-div {
-  position: relative;
-}
-`
+
 export default function AddSondage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -74,9 +69,9 @@ export default function AddSondage() {
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
-        <h1>Create your new sondage</h1>
-        <div className="form-group">
-          <label>Title</label>
+        {/* <h1>Create your new sondage</h1> */}
+        <div className="form-group title">
+          {/* <label>Title</label> */}
           <input
             type="text"
             placeholder="Title of the sondage"
@@ -84,22 +79,24 @@ export default function AddSondage() {
             value={title}
           />
         </div>
-        <div className="form-group">
-          <label>Description</label>
+        <div className="form-group description">
+          {/* <label>Description</label> */}
           <textarea
             name="description"
             placeholder="Description of the sondage"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             cols={20}
-            rows={8}
+            rows={6}
           />
         </div>
         <div className="form-group answers">
-          <label>Answers</label>
+          {/* <label>Answers</label> */}
           {!!answers.length ? answers.map((a, i) =>
             <AnimatePresence>
-              <motion.div className={className} key={a} 
+              <motion.div style={{
+                position: 'relative'
+              }} key={a} 
         initial={{ opacity: 0, height: 0, }}
         animate={{ opacity: 1, height: '40px' }}
         exit={{ opacity: 0, height: 0,  }}>
@@ -144,11 +141,13 @@ export default function AddSondage() {
           </Button>
         </div>
       </form>
-      {styles}
       <style jsx>
         {`
           .form-group {
             padding-bottom: 12px;
+          }
+          .form-group.description {
+            padding-bottom: 48px;
           }
           .form-group > label {
             display: block;
@@ -158,10 +157,18 @@ export default function AddSondage() {
           .form-group input[type="text"] {
             padding: 10px;
             width: 100%;
+            border: 2px dashed lightgray;
+            border-radius: 22px;
+            font-size: 3.6em;
+            font-family: inherit;
+            margin: .4em 0 0;
           }
           .form-group textarea {
-            padding: 10px;
+            padding: 15px 10px 10px;
             width: 100%;
+            border-radius: 22px;
+            border: 2px dashed lightgray;
+            box-shadow: none;
           }
           .form-group.button {
             display: flex;
@@ -169,6 +176,9 @@ export default function AddSondage() {
             padding: 12px 0;
           }
           .form-group.answers {
+          }
+          .form-group.answers .answer {
+            position: relative;
           }
           .form-group.answers input:disabled {
             margin-bottom: 12px;

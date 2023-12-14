@@ -14,12 +14,13 @@ export async function getServerSideProps() {
 
     let responseSondages = await fetch('http://localhost:3000/api/sondages/getSondages');
     let sondages = await responseSondages.json();
+    console.log(sondages);
 
 
 
     return {
       props: {
-        sondages: JSON.parse(JSON.stringify(sondages)),
+        sondages: sondages,
         // sondages: [],
       },
     };
