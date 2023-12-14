@@ -14,7 +14,6 @@ export async function getServerSideProps() {
 
     let responseSondages = await fetch('http://localhost:3000/api/sondages/getSondages');
     let sondages = await responseSondages.json();
-    console.log(sondages);
 
 
 
