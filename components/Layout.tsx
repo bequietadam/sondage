@@ -26,10 +26,9 @@ export default function Layout(props: any) {
           .layout .navbar {
             margin-right: 9px;
             margin-bottom: -14px;
-            border: 3px solid #000;
+            border: 3px solid var(--text);
             border-radius: 6px;
-            background: #7FFFD4;
-            background: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
+            background: var(--nav-gradient);
             z-index: 1;
           }
 
@@ -39,8 +38,8 @@ export default function Layout(props: any) {
             flex: 1 0 auto;
             margin-left: 12px;
 
-            background: white;
-            border: 3px solid #000;
+            background: var(--primary-text);
+            border: 3px solid var(--text);
             border-radius: 6px;
             padding: 12px 48px 30px;
 

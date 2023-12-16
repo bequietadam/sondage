@@ -180,7 +180,7 @@ export default function AddSondage() {
           .form-group input[type="text"] {
             padding: 10px;
             width: 100%;
-            border: 2px dashed lightgray;
+            border: 2px dashed var(--border);
             border-radius: 22px;
             font-size: 3.6em;
             font-family: inherit;
@@ -190,7 +190,7 @@ export default function AddSondage() {
             padding: 15px 10px 10px;
             width: 100%;
             border-radius: 22px;
-            border: 2px dashed lightgray;
+            border: 2px dashed var(--border);
             box-shadow: none;
           }
           .form-group.button {

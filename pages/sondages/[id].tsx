@@ -293,7 +293,7 @@ export default function EditSondage({
           .form-group.title textarea {
             padding: 10px;
             width: 100%;
-            border: 2px dashed lightgray;
+            border: 2px dashed var(--border);
             border-radius: 22px;
             font-size: 3.6em;
             font-family: inherit;
@@ -304,7 +304,7 @@ export default function EditSondage({
             padding: 15px 10px 10px;
             width: 100%;
             border-radius: 22px;
-            border: 2px dashed lightgray;
+            border: 2px dashed var(--border);
             box-shadow: none;
             resize: none;
           }

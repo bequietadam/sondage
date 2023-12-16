@@ -109,10 +109,9 @@ export default function InputRadio({
             display: flex;
             justify-content: flex-start;
             position: relative;
-            border: 2px dashed orchid;
+            border: 2px dashed var(--primary);
             border-radius: 40px;
             width: 100%;
-            // height: 40px;
             margin: 12px 0 20px;
             position:relative;
             box-sizing: border-box; 
@@ -136,7 +135,7 @@ export default function InputRadio({
             right: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, orchid 0%, #DE3163 100%);
+            background: var(--primary-gradient);
             opacity: 0.33;
           }
           .radio p {

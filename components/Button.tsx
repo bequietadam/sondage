@@ -27,12 +27,12 @@ export default function Button({ onClick = () => { }, children, className, disab
         {`
           button {
             position:relative;
-            background: linear-gradient(to right, orchid 0%, #DE3163 100%);
+            background: var(--primary-gradient);
             font-weight: 900;
-            color: white;
+            color: var(--background);
             right: 0px;
             border: 0;
-            border: 3px solid #DE3163;
+            border: 3px solid var(--primary-variant);
             border-radius: 40px;
             opacity: 0.8;
             padding: 10px 18px 12px;
@@ -40,7 +40,7 @@ export default function Button({ onClick = () => { }, children, className, disab
           }
 
           button.small {
-            border: 2px solid orchid;
+            border: 2px solid var(--primary);
             padding: 4px 12px 6px;
           }
 
@@ -50,7 +50,7 @@ export default function Button({ onClick = () => { }, children, className, disab
 
           button:active {
             right: 2px;
-            color: #DE3163;
+            color: var(--primary-variant);
           }
 
           button.small:active {
@@ -71,13 +71,13 @@ export default function Button({ onClick = () => { }, children, className, disab
             text-decoration: none;
           }
           button > :global(a), button > :global(a):visited {
-            color: white;
+            color: var(--background);
           }
 
           
           button:disabled, button:active:disabled {
             right: 0px;
-            color: white;
+            color: var(--background);
             opacity: 0.3;
           }
         `}

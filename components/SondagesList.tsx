@@ -43,12 +43,12 @@ export default function SondagesList({ sondages }: SondagesListProps) {
             list-style-type: none;
             display: block;
             padding: 0;
-            border: 2px dashed orchid;
+            border: 2px dashed var(--primary);
             border-radius: 40px;
           }
           .sondage-list .item {
             padding: 2px 15px 12px;
-            border-top: 2px dashed orchid;
+            border-top: 2px dashed var(--primary);
           }
           .sondage-list .item:first-child {
             border: none;
@@ -69,7 +69,7 @@ export default function SondagesList({ sondages }: SondagesListProps) {
           }
 
           .sondage-list h2.heading {
-            color: #ddd;
+            color: var(--border);
           }
         `}
       </style>

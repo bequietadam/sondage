@@ -69,7 +69,7 @@ export default function InputText({
           display: flex;
           justify-content: flex-start;
           position: relative;
-          border: 2px dashed orchid;
+          border: 2px dashed var(--primary);
           border-radius: 40px;
           width: 100%;
           // height: 40px;

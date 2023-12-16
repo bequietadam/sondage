@@ -25,14 +25,15 @@ const lightTheme = `
   :root {
     --primary: orchid;
     --primary-variant: #DE3163; 
-    --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%); 
-    --primary-text: white; 
+    --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%);
 
     --nav-gradient: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
 
     --background-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
 
     --text: #333;
+    --background: #eee;
+    --border: lightgray;
 
     --error: #DE3163;
     --success: #50c878;
@@ -44,13 +45,14 @@ const darkTheme = `
     --primary: orchid; //sm button border/radio border/sondagesList border
     --primary-variant: #DE3163; //lg button border/shadow
     --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%); //button
-    --primary-text: white; //button text
 
     --nav-gradient: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
 
     --background-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
 
     --text: #eee; //text/ block borders
+    --background: #333;
+    --border: #555;
 
     --error: #DE3163;
     --success: #50c878;
