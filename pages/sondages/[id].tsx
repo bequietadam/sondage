@@ -103,7 +103,7 @@ export default function EditSondage({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    
+
     if (!!newAnswer) {
       onClickAddAnswer() //to try
     }
@@ -131,7 +131,12 @@ export default function EditSondage({
         setError(errorMessage);
       }
     } else {
-      return setError("All fields are required");
+      setError("All fi are required");
+
+      setError('')
+
+      // setTimeout(() => setError(""), 30)
+      return
     }
   };
 
@@ -205,17 +210,39 @@ export default function EditSondage({
         </div>
         <div className="form-group answers">
           {/* <label>Answers</label> */}
-          {!!sondageAnswers.length ? sondageAnswers.map((a, i) =>
-            <AnimatePresence>
-              <motion.div style={{
-                position: 'relative'
-              }} key={a.answer}
+          <AnimatePresence>
+            {!!sondageAnswers.length ? sondageAnswers.map((a, i) =>
+              <motion.div
+                style={{
+                  position: 'relative',
+                }}
+                key={a.answer}
                 initial={{ opacity: 0, height: 0, }}
                 animate={{ opacity: 1, height: '40px' }}
-                exit={{ opacity: 0, height: 0, }}>
+                exit={{
+                  opacity: 0,
+                  height: '0px',
+                  marginTop: '-12px',
+                  overflow: 'clip',
+                  transition: {
+                    opacity: {
+                      ease: 'easeOut',
+                      duration: 0.7,
+                    },
+                    height: {
+                      ease: 'easeIn',
+                      duration: 0.5,
+                    },
+                    marginTop: {
+                      type: 'spring',
+                      duration: 0.7,
+                      bounce: 0.5,
+                      delay: 0.3,
+                    }
+                  }
+                }}>
                 <InputText
                   disabled={true}
-                  onChange={(event) => setNewAnswer(event.target.value)}
                   value={a.answer}
                 />
                 <Button
@@ -226,8 +253,8 @@ export default function EditSondage({
                   remove
                 </Button>
               </motion.div>
-            </AnimatePresence >
-          ) : null}
+            ) : null}
+          </AnimatePresence >
           {sondageAnswers.length < 12 && <InputText
             key="newAnswer"
             onChange={(e) => setNewAnswer(e.target.value)}
@@ -295,16 +322,11 @@ export default function EditSondage({
           .form-group.answers input:disabled {
             margin-bottom: 12px;
           }
-          .form-group.answers :global(button) {
-            position: absolute;
-            top: 5px;
-            right: 6px;
-          }
           .form-group :global(button) {
             margin-left: 12px;
           }
         `}
-      </style> 
+      </style>
     </Layout>
   );
 }

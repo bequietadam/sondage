@@ -92,14 +92,37 @@ export default function AddSondage() {
         </div>
         <div className="form-group answers">
           {/* <label>Answers</label> */}
-          {!!answers.length ? answers.map((a, i) =>
-            <AnimatePresence>
-              <motion.div style={{
-                position: 'relative'
-              }} key={a} 
-        initial={{ opacity: 0, height: 0, }}
-        animate={{ opacity: 1, height: '40px' }}
-        exit={{ opacity: 0, height: 0,  }}>
+          <AnimatePresence>
+            {!!answers.length ? answers.map((a, i) =>
+              <motion.div
+                style={{
+                position: 'relative',
+                }}
+                key={a}
+                initial={{ opacity: 0, height: 0, }}
+                animate={{ opacity: 1, height: '40px' }}
+                exit={{
+                  opacity: 0,
+                  height: '0px',
+                  marginTop: '-12px',
+                  overflow: 'clip',
+                  transition: {
+                    opacity: {
+                      ease: 'easeOut',
+                      duration: 0.7,
+                    },
+                    height: {
+                      ease: 'easeIn',
+                      duration: 0.5,
+                    },
+                    marginTop: {
+                      type: 'spring',
+                      duration: 0.7,
+                      bounce: 0.5,
+                      delay: 0.3,
+                    }
+                  }
+                }}>
                 <InputText
                   disabled={true}
                   onChange={(event) => setNewAnswer(event.target.value)}
@@ -113,8 +136,8 @@ export default function AddSondage() {
                   remove
                 </Button>
               </motion.div>
-            </AnimatePresence>
-          ) : null}
+            ) : null}
+          </AnimatePresence>
           {answers.length < 12 &&
             <div className="answer new">
               <InputText
@@ -128,7 +151,7 @@ export default function AddSondage() {
         </div >
         <div className="form-group button">
           <Button
-            disabled={!newAnswer && answers.length >= 12}
+            disabled={!newAnswer || answers.length >= 12}
             onClick={onClickAddAnswer}
           >
             {answers.length >= 12 ? 'already enough answers' : 'another answer pls'}
@@ -179,6 +202,9 @@ export default function AddSondage() {
           }
           .form-group.answers .answer {
             position: relative;
+          }
+          .form-group.answers .answer :global(InputText) {
+            margin: 0;
           }
           .form-group.answers input:disabled {
             margin-bottom: 12px;

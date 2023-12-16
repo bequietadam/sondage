@@ -1,6 +1,9 @@
-import type { AppProps } from 'next/app'
+import { useState } from 'react';
+import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
-import { Concert_One } from 'next/font/google'
+import { Concert_One } from 'next/font/google';
+
+type Theme = 'light' | 'dark';
 
 const ArgentumNovus = localFont({
   src: './fonts/Argentum-Novus-Black.ttf.woff'
@@ -18,13 +21,55 @@ const ConcertOne = Concert_One({
   display: 'block'
 });
 
+const lightTheme = `
+  :root {
+    --primary: orchid;
+    --primary-variant: #DE3163; 
+    --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%); 
+    --primary-text: white; 
+
+    --nav-gradient: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
+
+    --background-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
+
+    --text: #333;
+
+    --error: #DE3163;
+    --success: #50c878;
+  }
+`
+
+const darkTheme = `
+  :root {
+    --primary: orchid; //sm button border/radio border/sondagesList border
+    --primary-variant: #DE3163; //lg button border/shadow
+    --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%); //button
+    --primary-text: white; //button text
+
+    --nav-gradient: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
+
+    --background-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
+
+    --text: #eee; //text/ block borders
+
+    --error: #DE3163;
+    --success: #50c878;
+  }
+`
+
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+
+  // const storedTheme = localStorage.getItem('theme');
+  // const initTheme = (!!storedTheme ? storedTheme : window.matchMedia("(prefers-color-scheme:light)").matches ? 'light' : 'dark') as Theme;
+  // const initTheme = (window.matchMedia("(prefers-color-scheme:light)").matches ? 'light' : 'dark') as Theme;
+  const [theme, setTheme] = useState<Theme>('light')
   return (
     <main className={ConcertOne.className}>
       <Component {...pageProps} />
       <style jsx global>
         {`
+        ${theme === 'light' ? lightTheme : darkTheme}
         *, *:before, *:after {
           box-sizing: inherit;
         }        
@@ -48,8 +93,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         main {
           display: flex;
           background: cornsilk;
-          background: linear-gradient(150deg, cornsilk 0%, #FAD5A5 100%);
-          background: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
+          // background: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
+          background: var(--background-gradient);
           background-size: 400% 400%;
           // background-position: 100% 50%;
           animation: gradient 180s linear infinite;
@@ -68,12 +113,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         
         .alert-error {
           width: 100%;
-          color: red;
+          color: var(--error);
           position: absolute;
         }
         .alert-message {
           width: 100%;
-          color: green;
+          color: var(--success);
           position: absolute;
         }
 

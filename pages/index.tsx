@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Layout from '../components/Layout';
 import SondagesList from '../components/SondagesList';
 
@@ -33,8 +32,7 @@ export async function getServerSideProps() {
   }
 }
 
-export default function Home(props: Props) {
-  const [sondages, setSondages] = useState<Sondage[]>(props.sondages);
+export default function Home({sondages}: Props) {
 
 
   return (
