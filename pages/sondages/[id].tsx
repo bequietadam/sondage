@@ -189,14 +189,11 @@ export default function EditSondage({
         {/* <h1>Edit your sondage</h1> */}
         <div className="form-group title">
           {/* <label>Title</label> */}
-          <textarea
-            // type="text"
-            ref={titleTextarea}
+          <input
+            type="text"
             placeholder="Title of the sondage"
             onChange={(e) => setSondageTitle(e.target.value)}
             value={sondageTitle}
-            cols={20}
-            rows={1}
           />
         </div>
         <div className="form-group description">
@@ -290,21 +287,24 @@ export default function EditSondage({
             margin-bottom: 10px;
             font-weight: bold;
           }
-          .form-group.title textarea {
+          .form-group.title input[type="text"] {
             padding: 10px;
             width: 100%;
             border: 2px dashed var(--border);
             border-radius: 22px;
+            background: transparent;
+            color: var(--text);
             font-size: 3.6em;
             font-family: inherit;
-            margin: .4em 0 0;
-            resize: none;
+            margin: 35px 0 0;
           }
           .form-group textarea {
             padding: 15px 10px 10px;
             width: 100%;
             border-radius: 22px;
             border: 2px dashed var(--border);
+            background: transparent;
+            color: var(--text);
             box-shadow: none;
             resize: none;
           }

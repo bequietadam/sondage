@@ -24,16 +24,19 @@ const ConcertOne = Concert_One({
 const lightTheme = `
   :root {
     --primary: orchid;
-    --primary-variant: #DE3163; 
+    --primary-alt: #DE3163; 
     --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%);
 
     --nav-gradient: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
 
-    --background-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
+    --main-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
 
-    --text: #333;
-    --background: #eee;
-    --border: lightgray;
+    --text: #3a3a3a;
+    --background: #fdfdfd;
+    --border: #d7d7d7;
+
+    --primary-border: var(--primary);
+    --button-small-border: var(--primary);
 
     --error: #DE3163;
     --success: #50c878;
@@ -42,19 +45,22 @@ const lightTheme = `
 
 const darkTheme = `
   :root {
-    --primary: orchid; //sm button border/radio border/sondagesList border
-    --primary-variant: #DE3163; //lg button border/shadow
-    --primary-gradient: linear-gradient(to right, orchid 0%, #DE3163 100%); //button
+    --primary: #e94560; 
+    --primary-alt: #0f3460;
+    --primary-gradient: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) 100%);
 
-    --nav-gradient: linear-gradient(178deg, #7FFFD4 0%, #50c878 180%);
+    --nav-gradient: linear-gradient(178deg, var(--primary-alt) 0%, #16213e 180%);
 
-    --background-gradient: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
+    --main-gradient: linear-gradient(150deg,var(--primary-alt) -140%, #1a1a2e 30%, #1a1a2e 70%, var(--primary) 210%);
 
-    --text: #eee; //text/ block borders
-    --background: #333;
-    --border: #555;
+    --text: #888;
+    --background: #1a1a1a;
+    --border: #111;
 
-    --error: #DE3163;
+    --primary-border: var(--primary-alt);
+    --button-small-border: var(--primary-alt);
+
+    --error: #e94560;
     --success: #50c878;
   }
 `
@@ -79,12 +85,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           display: flex;
           min-height: 100%;
           box-sizing: border-box;
+          background: var(--background);
         }
         body {
           display: flex;
           margin: 0;
           flex: 1 1 100%;
           font-family: ${ConcertOne.style.fontFamily};
+          
+          color: var(--text);
         }
         #__next {
           display: flex;
@@ -96,7 +105,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           display: flex;
           background: cornsilk;
           // background: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
-          background: var(--background-gradient);
+          background: var(--main-gradient);
           background-size: 400% 400%;
           // background-position: 100% 50%;
           animation: gradient 180s linear infinite;
@@ -106,6 +115,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           font-size: 3.6em;
           // line-height: 3em;
           margin: 0.4em 0;
+          margin: 35px 0 .4em;
         }
 
         input, textarea {

@@ -17,7 +17,7 @@ const { className, styles } = css.resolve`
     display: flex;
     justify-content: flex-start;
     position: relative;
-    border: 2px dashed orchid;
+    border: 2px dashed var(--primary-border);
     border-radius: 40px;
     width: 100%;
     // height: 40px;
@@ -69,7 +69,7 @@ export default function InputText({
           display: flex;
           justify-content: flex-start;
           position: relative;
-          border: 2px dashed var(--primary);
+          border: 2px dashed var(--primary-border);
           border-radius: 40px;
           width: 100%;
           // height: 40px;
@@ -95,6 +95,7 @@ export default function InputText({
           height: 100%;
           text-align: center;
           border-radius: 40px;
+          color: var(--text);
         }
 
         .answers .answer div.input-text {

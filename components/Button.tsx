@@ -32,7 +32,7 @@ export default function Button({ onClick = () => { }, children, className, disab
             color: var(--background);
             right: 0px;
             border: 0;
-            border: 3px solid var(--primary-variant);
+            border: 3px solid var(--primary-alt);
             border-radius: 40px;
             opacity: 0.8;
             padding: 10px 18px 12px;
@@ -40,7 +40,7 @@ export default function Button({ onClick = () => { }, children, className, disab
           }
 
           button.small {
-            border: 2px solid var(--primary);
+            border: 2px solid var(--button-small-border);
             padding: 4px 12px 6px;
           }
 
@@ -50,7 +50,7 @@ export default function Button({ onClick = () => { }, children, className, disab
 
           button:active {
             right: 2px;
-            color: var(--primary-variant);
+            color: var(--primary-alt);
           }
 
           button.small:active {

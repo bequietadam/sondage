@@ -109,7 +109,7 @@ export default function InputRadio({
             display: flex;
             justify-content: flex-start;
             position: relative;
-            border: 2px dashed var(--primary);
+            border: 2px dashed var(--primary-border);
             border-radius: 40px;
             width: 100%;
             margin: 12px 0 20px;

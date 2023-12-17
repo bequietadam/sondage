@@ -86,7 +86,7 @@ export default function ProgressBar({
             display: flex;
             justify-content: flex-start;
             position: relative;
-            border: 2px dashed var(--primary);
+            border: 2px dashed var(--primary-border);
             border-radius: 40px;
             width: 100%;
             // height: 40px;
@@ -99,7 +99,7 @@ export default function ProgressBar({
             right: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, var(--primary) 0%, var(--primary-variant) ${((100 / ((100 / maxProgressValue) * progressValue)) * (100 / ((100 / maxProgressValue) * progressValue))) * ((100 / maxProgressValue) * progressValue)}%);
+            background: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) ${((100 / ((100 / maxProgressValue) * progressValue)) * (100 / ((100 / maxProgressValue) * progressValue))) * ((100 / maxProgressValue) * progressValue)}%);
             opacity: 0.33;
           }
           .progressbar p {

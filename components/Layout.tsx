@@ -26,7 +26,8 @@ export default function Layout(props: any) {
           .layout .navbar {
             margin-right: 9px;
             margin-bottom: -14px;
-            border: 3px solid var(--text);
+            // border: 3px solid var(--text);
+            border: 3px solid var(--border);
             border-radius: 6px;
             background: var(--nav-gradient);
             z-index: 1;
@@ -38,10 +39,11 @@ export default function Layout(props: any) {
             flex: 1 0 auto;
             margin-left: 12px;
 
-            background: var(--primary-text);
-            border: 3px solid var(--text);
+            background: var(--background);
+            // border: 3px solid var(--text);
+            border: 3px solid var(--border);
             border-radius: 6px;
-            padding: 12px 48px 30px;
+            padding: 20px 48px 30px;
 
 
             label {

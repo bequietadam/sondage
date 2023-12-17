@@ -177,21 +177,26 @@ export default function AddSondage() {
             margin-bottom: 10px;
             font-weight: bold;
           }
-          .form-group input[type="text"] {
+          .form-group.title input[type="text"] {
             padding: 10px;
             width: 100%;
             border: 2px dashed var(--border);
             border-radius: 22px;
+            background: transparent;
+            color: var(--text);
             font-size: 3.6em;
             font-family: inherit;
-            margin: .4em 0 0;
+            margin: 35px 0 0;
           }
           .form-group textarea {
             padding: 15px 10px 10px;
             width: 100%;
             border-radius: 22px;
             border: 2px dashed var(--border);
+            background: transparent;
+            color: var(--text);
             box-shadow: none;
+            resize: none;
           }
           .form-group.button {
             display: flex;
