@@ -136,7 +136,7 @@ export default function InputRadio({
             width: 100%;
             height: 100%;
             background: var(--primary-gradient);
-            opacity: 0.33;
+            opacity: 0.77;
           }
           .radio p {
             position: relative;

@@ -31,6 +31,7 @@ export default function Layout(props: any) {
             border-radius: 6px;
             background: var(--nav-gradient);
             z-index: 1;
+            transition: all .15s ease-in-out;
           }
 
           .layout .content {
@@ -44,6 +45,7 @@ export default function Layout(props: any) {
             border: 3px solid var(--border);
             border-radius: 6px;
             padding: 20px 48px 30px;
+            transition: all .15s ease-in-out;
 
 
             label {

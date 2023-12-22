@@ -109,17 +109,17 @@ export default function AddSondage() {
                   transition: {
                     opacity: {
                       ease: 'easeOut',
-                      duration: 0.7,
+                      duration: 0.5,
                     },
                     height: {
                       ease: 'easeIn',
-                      duration: 0.5,
+                      duration: 0.35,
                     },
                     marginTop: {
                       type: 'spring',
-                      duration: 0.7,
+                      duration: 0.5,
                       bounce: 0.5,
-                      delay: 0.3,
+                      delay: 0.2,
                     }
                   }
                 }}>

@@ -38,7 +38,7 @@ export default function Home({sondages}: Props) {
   return (
     <Layout>
       <div className="home">
-        <h1 className="heading">All sondage created:</h1>
+        <h1 className="heading">Every sondages:</h1>
         <SondagesList sondages={sondages}/>
       </div>
     </Layout>

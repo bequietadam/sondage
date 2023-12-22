@@ -21,10 +21,10 @@ export default function SondagesList({ sondages }: SondagesListProps) {
               <li key={index} className="item">
                 <div className="details">
                   <h2>{sondage.title}</h2>
-                  <p>{sondage.description}</p>
                 </div>
                 <div className="actions">
-                  <Link className="link" href={`/sondages/${sondage._id}`}>Edit</Link>
+                  {/* <Link className="link" href={`/sondages/${sondage._id}`}>Edit</Link> */}
+                  <p>{sondage.description}</p>
                   <Button size="small"><Link href={`/sondages/play/${sondage._id}`}>Play</Link></Button>
                   <Button size="small"><Link href={`/sondages/result/${sondage._id}`}>Result</Link></Button>
                   <Button size="small" onClick={() => handleDeleteSondage(sondage._id as string)}>Delete
@@ -47,7 +47,7 @@ export default function SondagesList({ sondages }: SondagesListProps) {
             border-radius: 40px;
           }
           .sondage-list .item {
-            padding: 2px 15px 12px;
+            padding: 6px 15px 16px;
             border-top: 2px dashed var(--primary-border);
           }
           .sondage-list .item:first-child {
@@ -59,8 +59,13 @@ export default function SondagesList({ sondages }: SondagesListProps) {
           .sondage-list .item .actions {
             display: flex;
             justify-content: flex-end;
+            align-items: center;
           }
-          .sondage-list .item .actions > :global(a) {
+          .sondage-list .item .actions p {
+              margin-right: auto;
+              margin-bottom: 4px;
+          }
+          .sondage-list .item .actions  :global(a) {
             text-decoration: none;
             margin-right: auto;
           }

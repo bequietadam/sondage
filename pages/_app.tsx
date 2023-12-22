@@ -55,7 +55,72 @@ const darkTheme = `
 
     --text: #888;
     --background: #1a1a1a;
+    --border: #070707;
+
+    --primary-border: var(--primary-alt);
+    --button-small-border: var(--primary-alt);
+
+    --error: #e94560;
+    --success: #50c878;
+  }
+`
+const darkTheme1 = `
+  :root {
+    --primary: #A13333; 
+    --primary-alt: #B3541E;
+    --primary-gradient: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) 100%);
+
+    --nav-gradient: linear-gradient(178deg, var(--primary) 0%, #461111 180%);
+
+    --main-gradient: linear-gradient(150deg,var(--primary-alt) -140%, #040303 30%, #040303 70%, var(--primary) 210%);
+
+    --text: #888;
+    --background: #1a1a1a;
     --border: #111;
+
+    --primary-border: var(--primary);
+    --button-small-border: var(--primary-alt);
+
+    --error: #e94560;
+    --success: #50c878;
+  }
+`
+
+const darkTheme2 = `
+  :root {
+    --primary: #3C415C; 
+    --primary-alt: #301B3F;
+    --primary-gradient: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) 100%);
+
+    --nav-gradient: linear-gradient(178deg, var(--primary) 0%, var(--primary-alt) 180%);
+
+    --main-gradient: linear-gradient(150deg,var(--primary-alt) -140%, #151515 30%, #151515 70%, var(--primary) 210%);
+
+    --text: #888;
+    --background: #1a1a1a;
+    --border: #111;
+
+    --primary-border: var(--primary-alt);
+    --button-small-border: var(--primary);
+
+    --error: #e94560;
+    --success: #50c878;
+  }
+`
+
+const darkTheme3 = `
+  :root {
+    --primary: #A12568; 
+    --primary-alt: #FEC260;
+    --primary-gradient: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) 100%);
+
+    --nav-gradient: linear-gradient(178deg, #3B185F 0%, var(--primary) 180%);
+
+    --main-gradient: linear-gradient(150deg,#3B185F -140%, #2A0944 30%, #2A0944 70%, var(--primary) 210%);
+
+    --text: #888;
+    --background: #1a1a1a;
+    --border: #070707;
 
     --primary-border: var(--primary-alt);
     --button-small-border: var(--primary-alt);
@@ -65,16 +130,39 @@ const darkTheme = `
   }
 `
 
-
 export default function MyApp({ Component, pageProps }: AppProps) {
 
   // const storedTheme = localStorage.getItem('theme');
   // const initTheme = (!!storedTheme ? storedTheme : window.matchMedia("(prefers-color-scheme:light)").matches ? 'light' : 'dark') as Theme;
   // const initTheme = (window.matchMedia("(prefers-color-scheme:light)").matches ? 'light' : 'dark') as Theme;
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState((): string => {
+    if (typeof window !== 'undefined') {
+      const localTheme = window.localStorage.getItem('theme')
+      if (localTheme === null || localTheme === undefined) {
+        return 'light';
+      }
+      return `${localTheme}` ? localTheme : 'light';
+    }
+    return '';
+  })
+
+  const changeTheme = (newTheme: string) => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('theme', newTheme)
+    }
+    setTheme(newTheme)
+  }
+
+
+
+
   return (
     <main className={ConcertOne.className}>
       <Component {...pageProps} />
+      <div className="theme-switcher">
+        <button onClick={() => changeTheme('light')} >light</button>
+        <button onClick={() => changeTheme('dark')} >dark</button>
+      </div>
       <style jsx global>
         {`
         ${theme === 'light' ? lightTheme : darkTheme}
@@ -86,6 +174,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           min-height: 100%;
           box-sizing: border-box;
           background: var(--background);
+          overflow-x: hidden;
         }
         body {
           display: flex;
@@ -94,6 +183,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           font-family: ${ConcertOne.style.fontFamily};
           
           color: var(--text);
+          transition: color .1s ease-in-out;
         }
         #__next {
           display: flex;
@@ -110,6 +200,21 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           // background-position: 100% 50%;
           animation: gradient 180s linear infinite;
           flex: 1 1 100%;
+          transition: all .3s ease-in-out;
+        }
+        .theme-switcher {
+          position: absolute;
+          bottom: 0;
+          padding: 12px;
+          display: flex;
+          right: 0;
+          background: var(--background);
+          height: 54px;
+          
+        }
+        .theme-switcher button {
+          height: 30px;
+          border-radius: 50%;
         }
         h1 {
           font-size: 3.6em;
