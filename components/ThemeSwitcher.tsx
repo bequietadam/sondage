@@ -12,8 +12,6 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
 
   const changeTheme: MouseEventHandler<HTMLButtonElement> = () => onClick(theme === 'light' ? 'dark' : 'light');
 
-  console.log(theme);
-
   return (
     <>
       <div className="theme-switcher" data-theme={theme} >
@@ -50,7 +48,7 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
             @media (hover: none) {
               --size: 48px;
             }
-
+            font-family inherit;
             color: var(--text);
           
           
