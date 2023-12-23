@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
 import { Concert_One } from 'next/font/google';
+import ThemeSwitcher from '../components/ThemeSwitcher';
 
 type Theme = 'light' | 'dark';
 
@@ -158,11 +159,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <main className={ConcertOne.className}>
+      <ThemeSwitcher onClick={changeTheme} theme={theme} />
       <Component {...pageProps} />
-      <div className="theme-switcher">
-        <button onClick={() => changeTheme('light')} >light</button>
-        <button onClick={() => changeTheme('dark')} >dark</button>
-      </div>
       <style jsx global>
         {`
         ${theme === 'light' ? lightTheme : darkTheme}
@@ -202,20 +200,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           flex: 1 1 100%;
           transition: all .3s ease-in-out;
         }
-        .theme-switcher {
-          position: absolute;
-          bottom: 0;
-          padding: 12px;
-          display: flex;
-          right: 0;
-          background: var(--background);
-          height: 54px;
-          
-        }
-        .theme-switcher button {
-          height: 30px;
-          border-radius: 50%;
-        }
         h1 {
           font-size: 3.6em;
           // line-height: 3em;
@@ -227,7 +211,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           font-family: monospace;
         }
 
-        
         .alert-error {
           width: 100%;
           color: var(--error);
