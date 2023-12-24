@@ -5,12 +5,14 @@ import Button from './Button';
 import useHandleDeleteSondage from '../hooks/useHandleDelete';
 
 type SondagesListProps = {
-  sondages: Sondage[],
+  copyLinkConfirmation: () => void;
+  sondages: Sondage[];
 }
 
-export default function SondagesList({ sondages }: SondagesListProps) {
+export default function SondagesList({ copyLinkConfirmation, sondages }: SondagesListProps) {
 
   const handleDeleteSondage = useHandleDeleteSondage();
+
 
   return (
     <>
@@ -27,7 +29,13 @@ export default function SondagesList({ sondages }: SondagesListProps) {
                   <p>{sondage.description}</p>
                   <Button size="small"><Link href={`/sondages/play/${sondage._id}`}>Play</Link></Button>
                   <Button size="small"><Link href={`/sondages/result/${sondage._id}`}>Result</Link></Button>
-                  <Button size="small" onClick={() => handleDeleteSondage(sondage._id as string)}>Delete
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      navigator.clipboard.writeText(`/sondages/play/${sondage._id}`);
+                      copyLinkConfirmation();
+                    } }
+                  >copy link
                   </Button>
                 </div>
               </li>

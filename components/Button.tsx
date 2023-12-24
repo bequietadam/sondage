@@ -29,7 +29,7 @@ export default function Button({ onClick = () => { }, children, className, disab
             position:relative;
             background: var(--primary-gradient);
             font-weight: 900;
-            color: var(--background);
+            color: var(--button-text);
             right: 0px;
             border: 0;
             border: 3px solid var(--primary-alt);

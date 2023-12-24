@@ -37,6 +37,7 @@ const lightTheme = `
     --border: #d7d7d7;
 
     --primary-border: var(--primary);
+    --button-text: var(--background);
     --button-small-border: var(--primary);
 
     --error: #DE3163;
@@ -59,6 +60,7 @@ const darkTheme = `
     --border: #070707;
 
     --primary-border: var(--primary-alt);
+    --button-text: var(--text);
     --button-small-border: var(--primary-alt);
 
     --error: #e94560;

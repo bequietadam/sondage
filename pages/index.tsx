@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Layout from '../components/Layout';
 import SondagesList from '../components/SondagesList';
 
@@ -33,13 +34,19 @@ export async function getServerSideProps() {
 }
 
 export default function Home({sondages}: Props) {
+  const [message, setMessage] = useState("");
 
+
+  const copyLinkConfirmation = () => {
+    setMessage('Link copied to clipboard!');
+  }
 
   return (
     <Layout>
       <div className="home">
+        {message ? <div className="alert-message">{message}</div> : null}
         <h1 className="heading">Every sondages:</h1>
-        <SondagesList sondages={sondages}/>
+        <SondagesList copyLinkConfirmation={copyLinkConfirmation} sondages={sondages}/>
       </div>
     </Layout>
   );
