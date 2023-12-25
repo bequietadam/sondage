@@ -117,18 +117,15 @@ export default function PlaySondage({
   return (
     <Layout>
       <div
-        // onSubmit={handleSubmit}
         className="form"
       >
         <div className="form-group">
           <h1>{title}</h1>
         </div>
         <div className="form-group">
-          {/* <label>Description</label> */}
           <p>{description}</p>
         </div>
         <div className="form-group answers">
-          {/* <label>Answers</label> */}
           {answers.map((answer, index) => {
             return (
               <ProgressBar
@@ -146,8 +143,13 @@ export default function PlaySondage({
       </div>
       <style jsx>
         {`
+          form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+          }
           .form-group.answers{
-            padding-bottom: 12px;
+            margin-bottom: 12px;
           }
           .form-group > label {
             display: block;
@@ -160,6 +162,14 @@ export default function PlaySondage({
           }
           .form-group > p {
             margin-bottom: 60px;
+          }
+          @media (max-width: 480px) {
+            .form-group > h1 {
+              margin-bottom: .2em;
+            }
+            .form-group > p {
+              margin-bottom: 36px;
+            }
           }
         `}
       </style>

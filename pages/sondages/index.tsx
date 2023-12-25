@@ -17,6 +17,7 @@ export default function AddSondage() {
     e.preventDefault();
     if (!!newAnswer) {
       onClickAddAnswer()
+      return;
     }
     if (title && description && answers.length > 1 && !newAnswer) {
       try {
@@ -49,8 +50,14 @@ export default function AddSondage() {
 
 
   const onClickAddAnswer = () => {
+    if (answers.includes(newAnswer)) {
+      setError('Please enter different answers')
+      return;
+    }
     setAnswers(s => [...s, newAnswer])
     setNewAnswer('')
+    setMessage('')
+    setError('')
   };
 
   const onClickRemoveAnswer = (i: number) => {
@@ -59,6 +66,8 @@ export default function AddSondage() {
       const newState = state;
       return [...newState];
     })
+    setMessage('')
+    setError('')
   }
 
 
@@ -69,9 +78,7 @@ export default function AddSondage() {
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
-        {/* <h1>Create your new sondage</h1> */}
         <div className="form-group title">
-          {/* <label>Title</label> */}
           <input
             type="text"
             placeholder="Title of the sondage"
@@ -80,7 +87,6 @@ export default function AddSondage() {
           />
         </div>
         <div className="form-group description">
-          {/* <label>Description</label> */}
           <textarea
             name="description"
             placeholder="Description of the sondage"
@@ -91,12 +97,11 @@ export default function AddSondage() {
           />
         </div>
         <div className="form-group answers">
-          {/* <label>Answers</label> */}
           <AnimatePresence>
             {!!answers.length ? answers.map((a, i) =>
               <motion.div
                 style={{
-                position: 'relative',
+                  position: 'relative',
                 }}
                 key={a}
                 initial={{ opacity: 0, height: 0, }}
@@ -154,7 +159,7 @@ export default function AddSondage() {
             disabled={!newAnswer || answers.length >= 12}
             onClick={onClickAddAnswer}
           >
-            {answers.length >= 12 ? 'already enough answers' : 'another answer pls'}
+            {answers.length >= 12 ? 'Already enough answers' : 'Another answer pls'}
           </Button>
           <Button
             className="submit_btn"
@@ -166,6 +171,11 @@ export default function AddSondage() {
       </form>
       <style jsx>
         {`
+          form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+          }
           .form-group {
             padding-bottom: 12px;
           }
@@ -178,7 +188,7 @@ export default function AddSondage() {
             font-weight: bold;
           }
           .form-group.title input[type="text"] {
-            padding: 10px;
+            padding: 6px 0 6px 6px;
             width: 100%;
             border: 2px dashed var(--border);
             border-radius: 22px;
@@ -186,7 +196,10 @@ export default function AddSondage() {
             color: var(--text);
             font-size: 3.6em;
             font-family: inherit;
-            margin: 35px 0 0;
+            margin: 28px 0 .1em;
+          }
+          .form-group.title input[type="text"]:focus {
+            outline: none;
           }
           .form-group textarea {
             padding: 15px 10px 10px;
@@ -202,6 +215,7 @@ export default function AddSondage() {
             display: flex;
             justify-content: flex-end;
             padding: 12px 0;
+            margin: auto 0 0;
           }
           .form-group.answers {
           }
@@ -225,6 +239,15 @@ export default function AddSondage() {
           }
           .form-group.button :global(button) {
             margin-left: 12px;
+          }
+
+          @media (max-width: 480px) {
+            .form-group.title input[type="text"] {
+              font-size: 1.7em;
+              font-size: 2.4em;
+              line-height: 0.9em;
+              margin-top: 24px;
+            }
           }
         `}
       </style>

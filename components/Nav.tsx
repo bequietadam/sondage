@@ -4,7 +4,6 @@ import React from "react";
 export default function Nav() {
   return (
     <nav className="navbar">
-      {/* <div className="navbar__container"> */}
         <ul>
           <li>
             <Link href="/">home</Link>
@@ -14,7 +13,6 @@ export default function Nav() {
           </li>
         </ul>
         <h5 className="navbar__title">sondage</h5>
-      {/* </div> */}
       <style jsx>
         {`
           nav {

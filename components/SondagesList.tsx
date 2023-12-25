@@ -25,7 +25,6 @@ export default function SondagesList({ copyLinkConfirmation, sondages }: Sondage
                   <h2>{sondage.title}</h2>
                 </div>
                 <div className="actions">
-                  {/* <Link className="link" href={`/sondages/${sondage._id}`}>Edit</Link> */}
                   <p>{sondage.description}</p>
                   <Button size="small"><Link href={`/sondages/play/${sondage._id}`}>Play</Link></Button>
                   <Button size="small"><Link href={`/sondages/result/${sondage._id}`}>Result</Link></Button>
@@ -68,6 +67,7 @@ export default function SondagesList({ copyLinkConfirmation, sondages }: Sondage
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            flex-wrap: wrap;
           }
           .sondage-list .item .actions p {
               margin-right: auto;
@@ -84,6 +84,22 @@ export default function SondagesList({ copyLinkConfirmation, sondages }: Sondage
           .sondage-list h2.heading {
             color: var(--border);
           }
+
+          @media (max-width: 480px) {
+            .sondage-list .item {
+            }
+            .sondage-list .item .actions {
+              justify-content: flex-end;
+            }
+            .sondage-list .item h2 {
+              margin-bottom: 0;
+            }
+            .sondage-list .item .actions p {
+              width: 100%;
+              margin-bottom: 16px;
+            }
+          }
+          
         `}
       </style>
     </>

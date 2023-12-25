@@ -125,7 +125,7 @@ export default function PlaySondage({
         router.replace({
           pathname: '/sondages/result/' + _id,
         })
-        
+
       } catch (errorMessage: any) {
         setError(errorMessage);
       }
@@ -153,18 +153,14 @@ export default function PlaySondage({
           <h1>{title}</h1>
         </div>
         <div className="form-group">
-          {/* <label>Description</label> */}
           <p>{description}</p>
         </div>
-        <div className="form-group">
-          {/* <label>Answers</label> */}
-          <div className="form-group answers">
-            {answers.map((answer, index) => {
-              return (
-                <InputRadio checked={answerIndex === index} name="play" text={answer.answer} key={answer.answer + index} onClick={() => setAnswerIndex(index)} />
-              );
-            })}
-          </div>
+        <div className="form-group answers">
+          {answers.map((answer, index) => {
+            return (
+              <InputRadio checked={answerIndex === index} name="play" text={answer.answer} key={answer.answer + index} onClick={() => setAnswerIndex(index)} />
+            );
+          })}
         </div>
         <div className="form-group button">
           <Button type="submit" className="submit_btn" disabled={answerIndex === -1}>Confirm vote</Button>
@@ -172,6 +168,11 @@ export default function PlaySondage({
       </form>
       <style jsx>
         {`
+          form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+          }
           .form-group.answers{
             margin-bottom: 12px;
           }
@@ -191,6 +192,16 @@ export default function PlaySondage({
             display: flex;
             justify-content: flex-end;
             padding: 12px 0;
+            margin: auto 0 0;
+          }
+
+          @media (max-width: 480px) {
+            .form-group > h1 {
+              margin-bottom: .2em;
+            }
+            .form-group > p {
+              margin-bottom: 36px;
+            }
           }
         `}
       </style>

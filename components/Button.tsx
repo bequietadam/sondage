@@ -80,6 +80,11 @@ export default function Button({ onClick = () => { }, children, className, disab
             color: var(--background);
             opacity: 0.3;
           }
+          @media (max-width: 480px) {
+            button {
+              padding: 8px 16px 10px;
+            }
+          }
         `}
       </style>
     </>

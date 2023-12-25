@@ -15,8 +15,6 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
   return (
     <>
       <div className="theme-switcher" data-theme={theme} >
-        {/* <button onClick={() => changeTheme('light')} >light</button>
-        <button onClick={() => changeTheme('dark')} >dark</button> */}
         <button
           suppressHydrationWarning={true}
           className="theme-toggle"
@@ -33,11 +31,10 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
         {`
 
           .theme-switcher {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             padding: 12px;
             display: flex;
-            right: 0;
             background: var(--background);
             height: 54px;
           }
@@ -63,6 +60,12 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
           
           }
           
+          @media (max-width: 480px) {
+            .theme-switcher {
+              height:32px;
+              padding: 6px;
+            }
+          }
           
         `}
       </style>

@@ -146,6 +146,7 @@ export default function InputRadio({
             height: 100%;
             z-index: 1;
             text-align: center;
+            overflow-wrap: break-word;
           }
         `}
       </style>

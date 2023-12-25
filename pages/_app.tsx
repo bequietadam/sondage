@@ -135,9 +135,6 @@ const darkTheme3 = `
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
-  // const storedTheme = localStorage.getItem('theme');
-  // const initTheme = (!!storedTheme ? storedTheme : window.matchMedia("(prefers-color-scheme:light)").matches ? 'light' : 'dark') as Theme;
-  // const initTheme = (window.matchMedia("(prefers-color-scheme:light)").matches ? 'light' : 'dark') as Theme;
   const [theme, setTheme] = useState((): string => {
     if (typeof window !== 'undefined') {
       const localTheme = window.localStorage.getItem('theme')
@@ -166,11 +163,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <style jsx global>
         {`
         ${theme === 'light' ? lightTheme : darkTheme}
+        :root {
+          --breakpoint: 540px;
+        }
         *, *:before, *:after {
           box-sizing: inherit;
         }        
         html {
           display: flex;
+          width: 100%;
           min-height: 100%;
           box-sizing: border-box;
           background: var(--background);
@@ -181,7 +182,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           margin: 0;
           flex: 1 1 100%;
           font-family: ${ConcertOne.style.fontFamily};
-          
+          min-height: 100%;
+          width: 100%;
           color: var(--text);
           transition: color .1s ease-in-out;
         }
@@ -190,9 +192,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           flex: 1 1 100%;
           padding: 8px;
           box-sizing: border-box;
+          min-height: 100%;
+          width: 100%;
         }
         main {
           display: flex;
+          min-height: 100%;
+          width: 100%;
+          position: relative;
           background: cornsilk;
           // background: linear-gradient(150deg,red -140%,cornsilk 30%, #fad5a5 70%, orangered 210%);
           background: var(--main-gradient);
@@ -204,9 +211,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
         h1 {
           font-size: 3.6em;
-          // line-height: 3em;
-          margin: 0.4em 0;
+          line-height: 1.18em;
           margin: 35px 0 .4em;
+        }
+        h2 {
+          font-size: 1.5em;
         }
 
         input, textarea {
@@ -216,12 +225,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         .alert-error {
           width: 100%;
           color: var(--error);
-          position: absolute;
+          position: fixed;
         }
         .alert-message {
           width: 100%;
           color: var(--success);
-          position: absolute;
+          position: fixed;
         }
 
         @keyframes gradient {
@@ -234,6 +243,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           100% {
             background-position: 0% 15%;
           }
+        }
+        
+        @media (max-width: 480px) { 
+          h1 {
+            font-size: 2.8em;
+            line-height: 0.9em;
+            margin: 24px 0 .6em;
+          }
+          h2 {
+            font-size: 1.4em;
+          }
+        }
+
       `}</style>
     </main>
   )

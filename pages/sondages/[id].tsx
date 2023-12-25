@@ -106,6 +106,7 @@ export default function EditSondage({
 
     if (!!newAnswer) {
       onClickAddAnswer() //to try
+      return;
     }
     if (sondageTitle && sondageDescription && sondageAnswers.length > 1 && !newAnswer) { // try sondage check
       try {
@@ -161,8 +162,14 @@ export default function EditSondage({
   }
 
   const onClickAddAnswer = () => {
+    if (answers.find(answer => answer.answer === newAnswer)) {
+      setError('Please enter different answers')
+      return;
+    }
     setSondageAnswers(s => [...s, { answer: newAnswer, count: 0 }])
     setNewAnswer('')
+    setMessage('')
+    setError('')
   };
 
   const onClickRemoveAnswer = (i: number) => {
@@ -171,6 +178,8 @@ export default function EditSondage({
       const newState = state;
       return [...newState];
     })
+    setMessage('')
+    setError('')
   }
 
   useEffect(() => {
@@ -186,9 +195,7 @@ export default function EditSondage({
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
-        {/* <h1>Edit your sondage</h1> */}
         <div className="form-group title">
-          {/* <label>Title</label> */}
           <input
             type="text"
             placeholder="Title of the sondage"
@@ -197,7 +204,6 @@ export default function EditSondage({
           />
         </div>
         <div className="form-group description">
-          {/* <label>Description</label> */}
           <textarea
             name="content"
             placeholder="Content of the sondage"
@@ -206,7 +212,6 @@ export default function EditSondage({
           />
         </div>
         <div className="form-group answers">
-          {/* <label>Answers</label> */}
           <AnimatePresence>
             {!!sondageAnswers.length ? sondageAnswers.map((a, i) =>
               <motion.div
@@ -264,7 +269,7 @@ export default function EditSondage({
             disabled={!newAnswer && sondageAnswers.length >= 12}
             onClick={onClickAddAnswer}
           >
-            {sondageAnswers.length < 12 ? 'another answer pls' : 'already enough answers'}
+            {sondageAnswers.length < 12 ? 'Another answer pls' : 'Already enough answers'}
           </Button>
           <Button
             className="submit_btn"
@@ -276,6 +281,11 @@ export default function EditSondage({
       </form>
       <style jsx>
         {`
+          form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+          }
           .form-group {
             padding-bottom: 12px;
           }
@@ -288,7 +298,7 @@ export default function EditSondage({
             font-weight: bold;
           }
           .form-group.title input[type="text"] {
-            padding: 10px;
+            padding: 6px 0 6px 6px;
             width: 100%;
             border: 2px dashed var(--border);
             border-radius: 22px;
@@ -296,7 +306,10 @@ export default function EditSondage({
             color: var(--text);
             font-size: 3.6em;
             font-family: inherit;
-            margin: 35px 0 0;
+            margin: 28px 0 .1em;
+          }
+          .form-group.title input[type="text"]:focus {
+            outline: none;
           }
           .form-group textarea {
             padding: 15px 10px 10px;
@@ -308,13 +321,16 @@ export default function EditSondage({
             box-shadow: none;
             resize: none;
           }
+          .form-group textarea:focus  {
+            outline: none;
+          }
           .form-group.button {
             display: flex;
             justify-content: flex-end;
             padding: 12px 0;
+            margin: auto 0 0;
           }
           .form-group.answers {
-
           }
           .form-group.answers .answer {
             position: relative;
@@ -324,6 +340,15 @@ export default function EditSondage({
           }
           .form-group :global(button) {
             margin-left: 12px;
+          }
+
+          @media (max-width: 480px) {
+            .form-group.title input[type="text"] {
+              font-size: 1.7em;
+              font-size: 2.4em;
+              line-height: 0.9em;
+              margin-top: 24px;
+            }
           }
         `}
       </style>
