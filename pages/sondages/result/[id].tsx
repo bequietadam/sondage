@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
 import ProgressBar from '../../../components/ProgressBar';
@@ -12,6 +12,8 @@ type ContentPageProps = {
   sondage: Sondage;
   maxCount: number;
 };
+
+type PageRef = React.ForwardedRef<HTMLDivElement>;
 
 type ResponseFromServer = {
   title: string;
@@ -91,10 +93,13 @@ export async function getStaticPaths() {
 }
 
 
-export default function PlaySondage({
-  sondage: { _id, title, description, answers },
-  maxCount,
-}: ContentPageProps) {
+function ResultSondage(
+  {
+    sondage: { _id, title, description, answers },
+    maxCount,
+  }: ContentPageProps,
+  ref: PageRef
+) {
   // const [sondageTitle, setSondageTitle] = useState(title);
   // const [sondageDescription, setSondageDescription] = useState(description);
   // const [sondageAnswers, setSondageAnswers] = useState(answers)
@@ -107,15 +112,15 @@ export default function PlaySondage({
 
 
   // no such sondage exists
-  if (!title && !description && !answers.length && !_id && typeof window) {
-    return (window.location.href = "/");
-  }
+  // if (!title && !description && !answers.length && !_id && typeof window) {
+  //   return (window.location.href = "/");
+  // }
 
 
 
 
   return (
-    <Layout>
+    <Layout ref={ref}>
       <div
         className="form"
       >
@@ -151,12 +156,6 @@ export default function PlaySondage({
           .form-group.answers{
             margin-bottom: 12px;
           }
-          .form-group > label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-style: italic;
-          }
           .form-group > h1 {
             margin-bottom: 0.1em;
           }
@@ -176,3 +175,6 @@ export default function PlaySondage({
     </Layout>
   );
 }
+
+
+export default forwardRef(ResultSondage);

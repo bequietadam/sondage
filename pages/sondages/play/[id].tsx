@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
 import { useRouter } from 'next/router';
@@ -13,6 +13,8 @@ type PageParams = {
 type ContentPageProps = {
   sondage: Sondage;
 };
+
+type PageRef = React.ForwardedRef<HTMLDivElement>;
 
 type ResponseFromServer = {
   title: string;
@@ -88,9 +90,12 @@ export async function getStaticPaths() {
 }
 
 
-export default function PlaySondage({
-  sondage: { _id, title, description, answers },
-}: ContentPageProps) {
+function PlaySondage(
+  {
+    sondage: { _id, title, description, answers },
+  }: ContentPageProps,
+  ref: PageRef
+) {
   // const [sondageTitle, setSondageTitle] = useState(title);
   // const [sondageDescription, setSondageDescription] = useState(description);
   // const [sondageAnswers, setSondageAnswers] = useState(answers)
@@ -134,15 +139,15 @@ export default function PlaySondage({
     }
   };
 
-  // no such sondage exists
-  if (!title && !description && !answers.length && !_id && typeof window) {
-    return (window.location.href = "/");
-  }
 
+  // no such sondage exists
+  // if (!title && !description && !answers.length && !_id && typeof window) {
+  //   return (window.location.href = "/");
+  // }
 
 
   return (
-    <Layout>
+    <Layout ref={ref}>
       <form
         onSubmit={handleSubmit}
         className="form"
@@ -176,12 +181,6 @@ export default function PlaySondage({
           .form-group.answers{
             margin-bottom: 12px;
           }
-          .form-group > label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-style: italic;
-          }
           .form-group > h1 {
             margin-bottom: 0.1em;
           }
@@ -208,3 +207,6 @@ export default function PlaySondage({
     </Layout>
   );
 };
+
+
+export default forwardRef(PlaySondage);

@@ -3,16 +3,16 @@ import React from "react";
 
 export default function Nav() {
   return (
-    <nav className="navbar">
-        <ul>
-          <li>
-            <Link href="/">home</Link>
-          </li>
-          <li>
-            <Link href="/sondages">create</Link>
-          </li>
-        </ul>
-        <h5 className="navbar__title">sondage</h5>
+    <nav>
+      <ul>
+        <li>
+          <Link href="/">home</Link>
+        </li>
+        <li>
+          <Link href="/sondages">create</Link>
+        </li>
+      </ul>
+      <h5 className="navbar__title">sondage</h5>
       <style jsx>
         {`
           nav {

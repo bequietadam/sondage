@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Button from '../../components/Button';
 import InputText from '../../components/InputText';
 import { AnimatePresence, motion } from 'framer-motion';
 
 
-export default function AddSondage() {
+
+type PageRef = React.ForwardedRef<HTMLDivElement>;
+
+
+function AddSondage(ref: PageRef) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [answers, setAnswers] = useState<string[]>([])
@@ -74,7 +78,7 @@ export default function AddSondage() {
 
 
   return (
-    <Layout>
+    <Layout ref={ref}>
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
@@ -182,11 +186,6 @@ export default function AddSondage() {
           .form-group.description {
             padding-bottom: 48px;
           }
-          .form-group > label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-          }
           .form-group.title input[type="text"] {
             padding: 6px 0 6px 6px;
             width: 100%;
@@ -254,3 +253,6 @@ export default function AddSondage() {
     </Layout>
   );
 }
+
+
+export default forwardRef(AddSondage);

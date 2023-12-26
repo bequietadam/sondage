@@ -2,7 +2,10 @@ import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
 import { Concert_One } from 'next/font/google';
+import Navbar from "../components/Nav";
 import ThemeSwitcher from '../components/ThemeSwitcher';
+import { AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
 
 type Theme = 'light' | 'dark';
 
@@ -134,6 +137,8 @@ const darkTheme3 = `
 `
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const pageKey = router.asPath;
 
   const [theme, setTheme] = useState((): string => {
     if (typeof window !== 'undefined') {
@@ -159,7 +164,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <main className={ConcertOne.className}>
       <ThemeSwitcher onClick={changeTheme} theme={theme} />
-      <Component {...pageProps} />
+      <div className="layout">
+        <div className="navbar">
+          <Navbar />
+        </div>
+        <div className="content">
+          <AnimatePresence initial={false} mode="wait">
+            <Component key={pageKey} {...pageProps} />
+          </AnimatePresence>
+        </div>
+      </div>
       <style jsx global>
         {`
         ${theme === 'light' ? lightTheme : darkTheme}
@@ -235,6 +249,49 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           position: fixed;
         }
 
+
+        
+        .layout {
+          display: flex;
+          position: relative;
+          flex-direction: column;
+          width: 760px;
+          min-height: 840px;
+          // margin: 0 auto;
+          border-sizing: border-box;
+          
+          padding: 60px 24px 0px;
+          margin: 0 0 60px;
+          overflow:hidden;
+        }
+
+        .layout .navbar {
+          margin-right: 9px;
+          margin-bottom: -14px;
+          // border: 3px solid var(--text);
+          border: 3px solid var(--border);
+          border-radius: 6px;
+          background: var(--nav-gradient);
+          z-index: 1;
+          transition: all .15s ease-in-out;
+        }
+        .layout .content {
+          display: flex;
+          flex: 1 0 auto;
+          margin-left: 12px;
+          background: var(--background);
+          // border: 3px solid var(--text);
+          border: 3px solid var(--border);
+          border-radius: 6px;
+          padding: 20px 48px 30px;
+          transition: all .15s ease-in-out;
+          overflow: hidden;
+          p {
+            margin-top: 0;
+            // line-height: 0.9em;
+          }
+        }
+
         @keyframes gradient {
           0% {
             background-position: 0% 15%;
@@ -258,6 +315,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           }
           h2 {
             font-size: 1.4em;
+          }
+
+          .layout {
+            width: 100%;
+            min-width: auto;
+            min-height: auto;
+            flex-grow: 1;
+            padding: 24px 12px 0px;
+            margin: 0 0 60px;
+          }
+          .layout .navbar {
+            margin-right: 7px;
+          }
+          .layout .content {
+            // flex-grow: 0;
+            margin-left: 10px;
+            padding: 12px 30px 30px;
           }
         }
 

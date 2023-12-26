@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../components/Layout";
 import Button from '../../components/Button';
@@ -13,6 +13,8 @@ type PageParams = {
 type ContentPageProps = {
   sondage: Sondage;
 };
+
+type PageRef = React.ForwardedRef<HTMLDivElement>;
 
 type ResponseFromServer = {
   title: string;
@@ -88,9 +90,12 @@ export async function getStaticPaths() {
 }
 
 
-export default function EditSondage({
-  sondage: { _id, title, description, answers },
-}: ContentPageProps) {
+function EditSondage(
+  {
+    sondage: { _id, title, description, answers },
+  }: ContentPageProps,
+  ref: PageRef
+) {
   const [sondageTitle, setSondageTitle] = useState(title);
   const [sondageDescription, setSondageDescription] = useState(description);
   const [sondageAnswers, setSondageAnswers] = useState(answers);
@@ -191,7 +196,7 @@ export default function EditSondage({
   }, [titleTextarea, sondageTitle])
 
   return (
-    <Layout>
+    <Layout ref={ref}>
       <form onSubmit={handleSubmit} className="form">
         {error ? <div className="alert-error">{error}</div> : null}
         {message ? <div className="alert-message">{message}</div> : null}
@@ -292,11 +297,6 @@ export default function EditSondage({
           .form-group.description {
             padding-bottom: 48px;
           }
-          .form-group > label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-          }
           .form-group.title input[type="text"] {
             padding: 6px 0 6px 6px;
             width: 100%;
@@ -355,3 +355,6 @@ export default function EditSondage({
     </Layout>
   );
 }
+
+
+export default forwardRef(EditSondage);

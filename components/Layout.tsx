@@ -1,100 +1,57 @@
-import React from "react";
-import Navbar from "./Nav";
+import React, { forwardRef, useMemo } from "react";
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-export default function Layout(props: any) {
+type PageTransitionProps = HTMLMotionProps<'div'>
+type PageTransitionRef = React.ForwardedRef<HTMLDivElement>
+
+const variants = {
+  init: {
+    x: '100%',
+    opacity: 0,
+  },
+  anim: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: {
+    x: '-60%',
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+      opacity: {
+        duration: 0.16,
+        ease: 'linear'
+      }
+    }
+  },
+}
+const transition = { duration: .32, ease: 'easeInOut', opacity: { ease: 'easeOut' } }
+
+function Layout(props: PageTransitionProps, ref: PageTransitionRef) {
+
   return (
     <>
-      <div className="layout">
-        <div className="navbar">
-          <Navbar />
-        </div>
-        <div className="content">
-          {props.children}
-        </div>
-      </div>
-      <style jsx>
-        {`
-          .layout {
-            display: flex;
-            position: relative;
-            flex-direction: column;
-            width: 760px;
-            min-height: 840px;
-            // margin: 0 auto;
-            border-sizing: border-box;
-            
-            padding: 60px 24px 0px;
-            margin: 0 0 60px;
-          }
-
-          .layout .navbar {
-            margin-right: 9px;
-            margin-bottom: -14px;
-            // border: 3px solid var(--text);
-            border: 3px solid var(--border);
-            border-radius: 6px;
-            background: var(--nav-gradient);
-            z-index: 1;
-            transition: all .15s ease-in-out;
-          }
-          .layout .content {
-            display: flex;
-            flex-direction: column;
-            flex: 1 0 auto;
-            margin-left: 12px;
-            background: var(--background);
-            // border: 3px solid var(--text);
-            border: 3px solid var(--border);
-            border-radius: 6px;
-            padding: 20px 48px 30px;
-            transition: all .15s ease-in-out;
-            label {
-              opacity: 0.6;
-              margin-bottom: 6px;
-            }
-            p {
-              margin-top: 0;
-              // line-height: 0.9em;
-            }
-          }
-          .layout .content label {
-            opacity: 0.1;
-          }
-          .layout .form {
-            max-width: 400px;
-            margin: 10px auto;
-          }
-          .layout .form-group {
-            width: 100%;
-            margin-bottom: 10px;
-            display: block;
-          }
-          .layout .home {
-            width: 100%;
-            margin: 10px auto;
-          }
-
-
-          @media (max-width: 480px) {
-            .layout {
-              width: 100%;
-              min-width: auto;
-              min-height: auto;
-              flex-grow: 1;
-              padding: 24px 12px 0px;
-              margin: 0 0 60px;
-            }
-            .layout .navbar {
-              margin-right: 7px;
-            }
-            .layout .content {
-              // flex-grow: 0;
-              margin-left: 10px;
-              padding: 12px 30px 30px;
-            }
-          }
-        `}
-      </style>
+      <motion.div
+        ref={ref}
+        initial="init"
+        animate="anim"
+        exit="exit"
+        transition={transition}
+        variants={variants}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: '1 0 auto',
+          width: '100%',
+        }}
+      >
+        {props.children}
+      </motion.div>
     </>
   );
 }
+
+
+
+
+export default forwardRef(Layout)

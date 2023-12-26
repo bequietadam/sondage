@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import Layout from '../components/Layout';
 import SondagesList from '../components/SondagesList';
 
@@ -6,6 +6,9 @@ import SondagesList from '../components/SondagesList';
 type Props = {
   sondages: Sondage[];
 }
+
+
+type PageRef = React.ForwardedRef<HTMLDivElement>;
 
 
 
@@ -33,7 +36,7 @@ export async function getServerSideProps() {
   }
 }
 
-export default function Home({sondages}: Props) {
+function Home({sondages}: Props, ref: PageRef) {
   const [message, setMessage] = useState("");
 
 
@@ -42,7 +45,7 @@ export default function Home({sondages}: Props) {
   }
 
   return (
-    <Layout>
+    <Layout ref={ref}>
       <div className="home">
         {message ? <div className="alert-message">{message}</div> : null}
         <h1 className="heading">Every sondages:</h1>
@@ -51,3 +54,5 @@ export default function Home({sondages}: Props) {
     </Layout>
   );
 }
+
+export default forwardRef(Home);
