@@ -1,7 +1,9 @@
 import React, { forwardRef, useMemo } from "react";
 import { motion, HTMLMotionProps } from 'framer-motion';
 
-type PageTransitionProps = HTMLMotionProps<'div'>
+type PageTransitionProps = HTMLMotionProps<'div'> & {
+  reverse?: boolean,
+}
 type PageTransitionRef = React.ForwardedRef<HTMLDivElement>
 
 const variants = {
@@ -27,13 +29,13 @@ const variants = {
 }
 const transition = { duration: .32, ease: 'easeInOut', opacity: { ease: 'easeOut' } }
 
-function Layout(props: PageTransitionProps, ref: PageTransitionRef) {
+function Layout(props: PageTransitionProps, ref: PageTransitionRef ) {
 
   return (
     <>
       <motion.div
         ref={ref}
-        initial="init"
+        initial={!props.reverse ? 'init' : 'exit'}
         animate="anim"
         exit="exit"
         transition={transition}

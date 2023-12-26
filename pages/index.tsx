@@ -45,7 +45,7 @@ function Home({sondages}: Props, ref: PageRef) {
   }
 
   return (
-    <Layout ref={ref}>
+    <Layout ref={ref} reverse={true}>
       <div className="home">
         {message ? <div className="alert-message">{message}</div> : null}
         <h1 className="heading">Every sondages:</h1>
