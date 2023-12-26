@@ -70,27 +70,6 @@ const darkTheme = `
     --success: #50c878;
   }
 `
-const darkTheme2 = `
-  :root {
-    --primary: #A13333; 
-    --primary-alt: #B3541E;
-    --primary-gradient: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) 100%);
-
-    --nav-gradient: linear-gradient(178deg, var(--primary) 0%, #461111 180%);
-
-    --main-gradient: linear-gradient(150deg,var(--primary-alt) -140%, #040303 30%, #040303 70%, var(--primary) 210%);
-
-    --text: #888;
-    --background: #1a1a1a;
-    --border: #111;
-
-    --primary-border: var(--primary);
-    --button-small-border: var(--primary-alt);
-
-    --error: #e94560;
-    --success: #50c878;
-  }
-`
 
 const nightTheme = `
   :root {
@@ -137,8 +116,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     setTheme(newTheme)
   }
 
-
-  console.log(theme)
 
   return (
     <main className={ConcertOne.className}>

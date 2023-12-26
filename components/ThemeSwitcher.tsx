@@ -8,6 +8,7 @@ type ThemeSwitcherProps = {
 
 
 export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
+  // cycles through in following order: 'light' -> 'dark' -> 'night' -> 'light' and so on
 
 
   const changeTheme: MouseEventHandler<HTMLButtonElement> = () => onClick(theme === 'light' ? 'dark' : theme === 'dark' ? 'night' : 'light');
