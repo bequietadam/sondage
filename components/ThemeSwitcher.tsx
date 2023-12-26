@@ -10,7 +10,7 @@ type ThemeSwitcherProps = {
 export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
 
 
-  const changeTheme: MouseEventHandler<HTMLButtonElement> = () => onClick(theme === 'light' ? 'dark' : 'light');
+  const changeTheme: MouseEventHandler<HTMLButtonElement> = () => onClick(theme === 'light' ? 'dark' : theme === 'dark' ? 'night' : 'light');
 
   return (
     <>
@@ -23,7 +23,7 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
           aria-label="auto"
           aria-live="polite"
           onClick={changeTheme}
-        >{theme === 'light' ? 'dark theme' : 'light theme'}
+        >{theme === 'light' ? 'dark theme' : theme === 'dark' ? 'night theme' : 'light theme'}
         </button>
 
       </div>

@@ -71,13 +71,13 @@ export default function Button({ onClick = () => { }, children, className, disab
             text-decoration: none;
           }
           button > :global(a), button > :global(a):visited {
-            color: var(--background);
+            color: var(--button-text);
           }
 
           
           button:disabled, button:active:disabled {
             right: 0px;
-            color: var(--background);
+            color: var(--button-text);
             opacity: 0.3;
           }
           @media (max-width: 480px) {

@@ -70,7 +70,7 @@ const darkTheme = `
     --success: #50c878;
   }
 `
-const darkTheme1 = `
+const darkTheme2 = `
   :root {
     --primary: #A13333; 
     --primary-alt: #B3541E;
@@ -92,7 +92,7 @@ const darkTheme1 = `
   }
 `
 
-const darkTheme2 = `
+const nightTheme = `
   :root {
     --primary: #3C415C; 
     --primary-alt: #301B3F;
@@ -108,28 +108,7 @@ const darkTheme2 = `
 
     --primary-border: var(--primary-alt);
     --button-small-border: var(--primary);
-
-    --error: #e94560;
-    --success: #50c878;
-  }
-`
-
-const darkTheme3 = `
-  :root {
-    --primary: #A12568; 
-    --primary-alt: #FEC260;
-    --primary-gradient: linear-gradient(to right, var(--primary) 0%, var(--primary-alt) 100%);
-
-    --nav-gradient: linear-gradient(178deg, #3B185F 0%, var(--primary) 180%);
-
-    --main-gradient: linear-gradient(150deg,#3B185F -140%, #2A0944 30%, #2A0944 70%, var(--primary) 210%);
-
-    --text: #888;
-    --background: #1a1a1a;
-    --border: #070707;
-
-    --primary-border: var(--primary-alt);
-    --button-small-border: var(--primary-alt);
+    --button-text: var(--text);
 
     --error: #e94560;
     --success: #50c878;
@@ -159,7 +138,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }
 
 
-
+  console.log(theme)
 
   return (
     <main className={ConcertOne.className}>
@@ -176,7 +155,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </div>
       <style jsx global>
         {`
-        ${theme === 'light' ? lightTheme : darkTheme}
+        ${theme === 'light' ? lightTheme : theme === 'dark' ? darkTheme : nightTheme}
         :root {
           --breakpoint: 540px;
         }
@@ -322,8 +301,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             min-width: auto;
             min-height: auto;
             flex-grow: 1;
-            padding: 24px 12px 0px;
-            margin: 0 0 60px;
+            padding: 60px 12px 0px;
+            margin: 0 0 32px;
           }
           .layout .navbar {
             margin-right: 7px;
