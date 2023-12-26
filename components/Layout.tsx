@@ -18,11 +18,13 @@ export default function Layout(props: any) {
             display: flex;
             position: relative;
             flex-direction: column;
-            padding: 120px 60px 120px;
             width: 760px;
             min-height: 840px;
-            margin: 0 auto;
+            // margin: 0 auto;
             border-sizing: border-box;
+            
+            padding: 60px 24px 0px;
+            margin: 0 0 60px;
           }
 
           .layout .navbar {

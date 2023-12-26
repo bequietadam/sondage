@@ -28,6 +28,10 @@ export default function SondagesList({ copyLinkConfirmation, sondages }: Sondage
                   <p>{sondage.description}</p>
                   <Button size="small"><Link href={`/sondages/play/${sondage._id}`}>Play</Link></Button>
                   <Button size="small"><Link href={`/sondages/result/${sondage._id}`}>Result</Link></Button>
+                  {/* <Button
+                    size="small"
+                    onClick={() => handleDeleteSondage(sondage._id)}
+                  >Delete</Button> */}
                   <Button
                     size="small"
                     onClick={() => {
@@ -85,18 +89,16 @@ export default function SondagesList({ copyLinkConfirmation, sondages }: Sondage
             color: var(--border);
           }
 
-          @media (max-width: 480px) {
+
+          @media (max-width: 680px) {
             .sondage-list .item {
-            }
-            .sondage-list .item .actions {
-              justify-content: flex-end;
             }
             .sondage-list .item h2 {
               margin-bottom: 0;
             }
             .sondage-list .item .actions p {
               width: 100%;
-              margin-bottom: 16px;
+              margin-bottom: 24px;
             }
           }
           

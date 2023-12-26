@@ -197,6 +197,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
         main {
           display: flex;
+          justify-content: center;
+          align-items: center;
           min-height: 100%;
           width: 100%;
           position: relative;
@@ -246,10 +248,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
         
         @media (max-width: 480px) { 
+          main {
+            align-items: stretch;
+          }
           h1 {
-            font-size: 2.8em;
+            font-size: 2.4em;
             line-height: 0.9em;
-            margin: 24px 0 .6em;
+            margin: 35px 0 .6em;
           }
           h2 {
             font-size: 1.4em;

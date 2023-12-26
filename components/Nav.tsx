@@ -32,8 +32,16 @@ export default function Nav() {
             margin-right: 10px;
           }
 
-          nav ul li a {
+          nav ul li :global(a) {
             text-decoration: none;
+            color: var(--text);
+          }
+          nav ul li :global(a):visited {
+            color: var(--text);
+          }
+          nav ul li :global(a):active,
+          nav ul li :global(a):hover {
+            text-decoration: underline;
           }
 
           nav h5 {

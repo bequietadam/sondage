@@ -33,6 +33,7 @@ export default function ThemeSwitcher({ onClick, theme }: ThemeSwitcherProps) {
           .theme-switcher {
             position: fixed;
             bottom: 0;
+            left: 0;
             padding: 12px;
             display: flex;
             background: var(--background);
