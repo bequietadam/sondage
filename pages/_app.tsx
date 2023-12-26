@@ -58,12 +58,12 @@ const darkTheme = `
 
     --main-gradient: linear-gradient(150deg,var(--primary-alt) -140%, #1a1a2e 30%, #1a1a2e 70%, var(--primary) 210%);
 
-    --text: #888;
+    --text: #999;
     --background: #1a1a1a;
     --border: #070707;
 
     --primary-border: var(--primary-alt);
-    --button-text: var(--text);
+    --button-text: #bbb;
     --button-small-border: var(--primary-alt);
 
     --error: #e94560;
