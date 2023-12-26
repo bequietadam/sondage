@@ -155,7 +155,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           min-height: 100%;
           width: 100%;
           color: var(--text);
-          transition: color .1s ease-in-out;
+          // transition: color .15s ease-in-out;
         }
         #__next {
           display: flex;
@@ -179,7 +179,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           // background-position: 100% 50%;
           animation: gradient 180s linear infinite;
           flex: 1 1 100%;
-          transition: all .3s ease-in-out;
         }
         h1 {
           font-size: 3.6em;
@@ -229,7 +228,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           border-radius: 6px;
           background: var(--nav-gradient);
           z-index: 1;
-          transition: all .15s ease-in-out;
+          // transition: all .15s ease-in-out;
         }
         .layout .content {
           display: flex;
@@ -240,7 +239,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           border: 3px solid var(--border);
           border-radius: 6px;
           padding: 20px 48px 30px;
-          transition: all .15s ease-in-out;
+          // transition: all .15s ease-in-out;
           overflow: hidden;
           p {
             margin-top: 0;
