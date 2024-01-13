@@ -4,6 +4,7 @@ import Layout from "../../../components/Layout";
 import { useRouter } from 'next/router';
 import Button from '../../../components/Button';
 import InputRadio from '../../../components/InputRadio';
+import { getSondages } from "../../../lib/sondage";
 
 
 type PageParams = {
@@ -74,9 +75,12 @@ export async function getStaticProps({
 
 
 export async function getStaticPaths() {
-  let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
+  // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
 
-  let sondageFromServer: [Sondage] = await sondages.json();
+  let sondages: unknown = await getSondages();
+
+
+  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
   return {
     paths: sondageFromServer.map((sondage) => {
       return {
@@ -125,7 +129,6 @@ function PlaySondage(
             },
           }
         );
-        response = await response.json();
         setMessage("Vote sent");
         router.replace({
           pathname: '/sondages/result/' + _id,

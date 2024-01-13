@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
 import ProgressBar from '../../../components/ProgressBar';
+import { getSondages } from "../../../lib/sondage";
 
 
 type PageParams = {
@@ -77,9 +78,12 @@ export async function getStaticProps({
 
 
 export async function getStaticPaths() {
-  let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
+  // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
 
-  let sondageFromServer: [Sondage] = await sondages.json();
+  let sondages: unknown = await getSondages();
+
+
+  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
   return {
     paths: sondageFromServer.map((sondage) => {
       return {

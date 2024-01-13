@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react';
 import Layout from '../components/Layout';
 import SondagesList from '../components/SondagesList';
+import { getSondages } from '../lib/sondage';
 
 
 type Props = {
@@ -15,14 +16,18 @@ type PageRef = React.ForwardedRef<HTMLDivElement>;
 export async function getServerSideProps() {
   try {
 
-    let responseSondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
-    let sondages = await responseSondages.json();
+    // let responseSondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
+
+    let sondages: unknown = await getSondages();
+
+
+    let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
 
 
 
     return {
       props: {
-        sondages: sondages,
+        sondages: sondageFromServer,
         // sondages: [],
       },
     };

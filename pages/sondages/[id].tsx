@@ -4,6 +4,8 @@ import Layout from "../../components/Layout";
 import Button from '../../components/Button';
 import InputText from '../../components/InputText';
 import { AnimatePresence, motion } from 'framer-motion';
+import { getSondages } from "../../lib/sondage";
+
 
 
 type PageParams = {
@@ -74,9 +76,19 @@ export async function getStaticProps({
 
 
 export async function getStaticPaths() {
-  let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
+  // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
 
-  let sondageFromServer: [Sondage] = await sondages.json();
+  // const client = await clientPromise;
+  // const db = client.db("sondages");
+
+  // const sondages = await db.collection("sondages").find({}).limit(20).toArray();
+
+  // res.json(sondages);
+
+  let sondages: unknown = await getSondages();
+
+
+  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
   return {
     paths: sondageFromServer.map((sondage) => {
       return {
