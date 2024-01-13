@@ -15,7 +15,7 @@ type PageRef = React.ForwardedRef<HTMLDivElement>;
 export async function getServerSideProps() {
   try {
 
-    let responseSondages = await fetch('http://localhost:3000/api/sondages/getSondages');
+    let responseSondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
     let sondages = await responseSondages.json();
 
 

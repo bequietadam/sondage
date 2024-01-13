@@ -40,7 +40,7 @@ export async function getStaticProps({
 > {
   try {
     let response = await fetch(
-      "http://localhost:3000/api/sondages/getSondage?id=" + params?.id
+      process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
     );
 
     let responseFromServer: ResponseFromServer = await response.json();
@@ -77,7 +77,7 @@ export async function getStaticProps({
 
 
 export async function getStaticPaths() {
-  let sondages = await fetch("http://localhost:3000/api/sondages/getSondages");
+  let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
 
   let sondageFromServer: [Sondage] = await sondages.json();
   return {
