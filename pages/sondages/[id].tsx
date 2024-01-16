@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import Button from '../../components/Button';
 import InputText from '../../components/InputText';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getSondages } from "../../lib/sondage";
+import { getSondage, getSondages } from "../../lib/sondage";
 
 
 
@@ -36,20 +36,36 @@ const emptyAnswers = [
   emptyAnswer,
 ]
 
+export async function getStaticPaths() {
+
+  let sondages: unknown = await getSondages();
+
+
+  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
+  return {
+    paths: sondageFromServer.map((sondage) => {
+      return {
+        params: {
+          id: sondage._id,
+        },
+      };
+    }),
+    fallback: false, // can also be true or 'blocking'
+  };
+}
+
+
 export async function getStaticProps({
   params,
 }: GetStaticPropsContext<PageParams>): Promise<
   GetStaticPropsResult<ContentPageProps>
 > {
   try {
-    let response = await fetch(
-      process.env.SONDAGE_API_URL + "\/api/sondages/getSondage?id=" + params?.id
-    );
+    let response = await getSondage(params?.id);
 
-    let responseFromServer: ResponseFromServer = await response.json();
+    let responseFromServer: ResponseFromServer = JSON.parse(JSON.stringify(response));
 
     return {
-      // Passed to the page component as props
       props: {
         sondage: {
           _id: responseFromServer._id,
@@ -58,6 +74,7 @@ export async function getStaticProps({
           answers: responseFromServer.answers,
         },
       },
+      revalidate: true,
     };
   } catch (e) {
     console.log("error ", e);
@@ -75,31 +92,44 @@ export async function getStaticProps({
 }
 
 
-export async function getStaticPaths() {
-  // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
+// export async function getStaticProps({
+//   params,
+// }: GetStaticPropsContext<PageParams>): Promise<
+//   GetStaticPropsResult<ContentPageProps>
+// > {
+//   try {
+//     let response = await fetch(
+//       process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
+//     );
 
-  // const client = await clientPromise;
-  // const db = client.db("sondages");
+//     let responseFromServer: ResponseFromServer = await response.json();
 
-  // const sondages = await db.collection("sondages").find({}).limit(20).toArray();
+//     return {
+//       // Passed to the page component as props
+//       props: {
+//         sondage: {
+//           _id: responseFromServer._id,
+//           title: responseFromServer.title,
+//           description: responseFromServer.description,
+//           answers: responseFromServer.answers,
+//         },
+//       },
+//     };
+//   } catch (e) {
+//     console.log("error ", e);
+//     return {
+//       props: {
+//         sondage: {
+//           _id: "  ",
+//           title: "  ",
+//           description: "  ",
+//           answers: emptyAnswers,
+//         },
+//       },
+//     };
+//   }
+// }
 
-  // res.json(sondages);
-
-  let sondages: unknown = await getSondages();
-
-
-  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
-  return {
-    paths: sondageFromServer.map((sondage) => {
-      return {
-        params: {
-          id: sondage._id,
-        },
-      };
-    }),
-    fallback: false, // can also be true or 'blocking'
-  };
-}
 
 
 function EditSondage(

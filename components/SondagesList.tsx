@@ -35,7 +35,7 @@ export default function SondagesList({ copyLinkConfirmation, sondages }: Sondage
                   <Button
                     size="small"
                     onClick={() => {
-                      navigator.clipboard.writeText(`/sondages/play/${sondage._id}`);
+                      navigator.clipboard.writeText(`${window.location.href}/sondages/play/${sondage._id}`);
                       copyLinkConfirmation();
                     } }
                   >copy link

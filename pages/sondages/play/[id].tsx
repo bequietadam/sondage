@@ -4,7 +4,7 @@ import Layout from "../../../components/Layout";
 import { useRouter } from 'next/router';
 import Button from '../../../components/Button';
 import InputRadio from '../../../components/InputRadio';
-import { getSondages } from "../../../lib/sondage";
+import { getSondage, getSondages } from "../../../lib/sondage";
 
 
 type PageParams = {
@@ -35,20 +35,38 @@ const emptyAnswers = [
   emptyAnswer,
 ]
 
+
+
+export async function getStaticPaths() {
+
+  let sondages: unknown = await getSondages();
+
+
+  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
+  return {
+    paths: sondageFromServer.map((sondage) => {
+      return {
+        params: {
+          id: sondage._id,
+        },
+      };
+    }),
+    fallback: false, // can also be true or 'blocking'
+  };
+}
+
+
 export async function getStaticProps({
   params,
 }: GetStaticPropsContext<PageParams>): Promise<
   GetStaticPropsResult<ContentPageProps>
 > {
   try {
-    let response = await fetch(
-      process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
-    );
+    let response = await getSondage(params?.id);
 
-    let responseFromServer: ResponseFromServer = await response.json();
+    let responseFromServer: ResponseFromServer = JSON.parse(JSON.stringify(response));
 
     return {
-      // Passed to the page component as props
       props: {
         sondage: {
           _id: responseFromServer._id,
@@ -57,6 +75,7 @@ export async function getStaticProps({
           answers: responseFromServer.answers,
         },
       },
+      revalidate: true,
     };
   } catch (e) {
     console.log("error ", e);
@@ -74,24 +93,6 @@ export async function getStaticProps({
 }
 
 
-export async function getStaticPaths() {
-  // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
-
-  let sondages: unknown = await getSondages();
-
-
-  let sondageFromServer = JSON.parse(JSON.stringify(sondages)) as [Sondage];
-  return {
-    paths: sondageFromServer.map((sondage) => {
-      return {
-        params: {
-          id: sondage._id,
-        },
-      };
-    }),
-    fallback: false, // can also be true or 'blocking'
-  };
-}
 
 
 function PlaySondage(

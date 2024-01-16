@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import Layout from "../../../components/Layout";
 import ProgressBar from '../../../components/ProgressBar';
-import { getSondages } from "../../../lib/sondage";
+import { getSondage, getSondages } from "../../../lib/sondage";
 
 
 type PageParams = {
@@ -34,48 +34,6 @@ const emptyAnswers = [
   emptyAnswer,
 ]
 
-export async function getStaticProps({
-  params,
-}: GetStaticPropsContext<PageParams>): Promise<
-  GetStaticPropsResult<ContentPageProps>
-> {
-  try {
-    let response = await fetch(
-      process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
-    );
-
-    let responseFromServer: ResponseFromServer = await response.json();
-
-    const maxCount = Math.max(...responseFromServer.answers.map(i => i.count));
-
-    return {
-      // Passed to the page component as props
-      props: {
-        sondage: {
-          _id: responseFromServer._id,
-          title: responseFromServer.title,
-          description: responseFromServer.description,
-          answers: responseFromServer.answers,
-        },
-        maxCount: maxCount,
-      },
-    };
-  } catch (e) {
-    console.log("error ", e);
-    return {
-      props: {
-        sondage: {
-          _id: "  ",
-          title: "  ",
-          description: "  ",
-          answers: emptyAnswers,
-        },
-        maxCount: 0,
-      },
-    };
-  }
-}
-
 
 export async function getStaticPaths() {
   // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
@@ -95,6 +53,91 @@ export async function getStaticPaths() {
     fallback: false, // can also be true or 'blocking'
   };
 }
+
+export async function getStaticProps({
+  params,
+}: GetStaticPropsContext<PageParams>): Promise<
+  GetStaticPropsResult<ContentPageProps>
+> {
+  try {
+    let response = await getSondage(params?.id);
+
+    let responseFromServer: ResponseFromServer = JSON.parse(JSON.stringify(response));
+
+    
+    const maxCount = Math.max(...responseFromServer.answers.map(i => i.count));
+
+    return {
+      props: {
+        sondage: {
+          _id: responseFromServer._id,
+          title: responseFromServer.title,
+          description: responseFromServer.description,
+          answers: responseFromServer.answers,
+        },
+        maxCount: maxCount,
+      },
+      revalidate: true,
+    };
+  } catch (e) {
+    console.log("error ", e);
+    return {
+      props: {
+        sondage: {
+          _id: "  ",
+          title: "  ",
+          description: "  ",
+          answers: emptyAnswers,
+        },
+        maxCount: 0,
+      },
+    };
+  }
+}
+
+// export async function getStaticProps({
+//   params,
+// }: GetStaticPropsContext<PageParams>): Promise<
+//   GetStaticPropsResult<ContentPageProps>
+// > {
+//   try {
+//     let response = await fetch(
+//       process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
+//     );
+
+//     let responseFromServer: ResponseFromServer = await response.json();
+
+//     const maxCount = Math.max(...responseFromServer.answers.map(i => i.count));
+
+//     return {
+//       // Passed to the page component as props
+//       props: {
+//         sondage: {
+//           _id: responseFromServer._id,
+//           title: responseFromServer.title,
+//           description: responseFromServer.description,
+//           answers: responseFromServer.answers,
+//         },
+//         maxCount: maxCount,
+//       },
+//     };
+//   } catch (e) {
+//     console.log("error ", e);
+//     return {
+//       props: {
+//         sondage: {
+//           _id: "  ",
+//           title: "  ",
+//           description: "  ",
+//           answers: emptyAnswers,
+//         },
+//         maxCount: 0,
+//       },
+//     };
+//   }
+// }
+
+
 
 
 function ResultSondage(
