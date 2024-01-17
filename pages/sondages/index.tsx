@@ -241,8 +241,7 @@ function AddSondage(ref: PageRef) {
           }
 
           @media (max-width: 480px) {
-            .form-group.title input[type="text"] {
-              font-size: 1.7em;
+            .form-group.title input[type="text"] { 
               font-size: 2.4em;
               line-height: 0.9em;
               margin-top: 24px;

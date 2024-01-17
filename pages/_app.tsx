@@ -6,6 +6,7 @@ import Navbar from "../components/Nav";
 import ThemeSwitcher from '../components/ThemeSwitcher';
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 type Theme = 'light' | 'dark';
 
@@ -119,6 +120,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <main className={ConcertOne.className}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <ThemeSwitcher onClick={changeTheme} theme={theme} />
       <div className="layout">
         <div className="navbar">
@@ -192,6 +196,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
         input, textarea {
           font-family: monospace;
+          font-size: 16px;
         }
 
         .alert-error {
@@ -272,6 +277,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           h2 {
             font-size: 1.4em;
           }
+
 
           .layout {
             width: 100%;
