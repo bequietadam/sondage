@@ -101,9 +101,6 @@ function PlaySondage(
   }: ContentPageProps,
   ref: PageRef
 ) {
-  // const [sondageTitle, setSondageTitle] = useState(title);
-  // const [sondageDescription, setSondageDescription] = useState(description);
-  // const [sondageAnswers, setSondageAnswers] = useState(answers)
 
   const [newCount, setNewCount] = useState(-1);
   const [answerIndex, setAnswerIndex] = useState(-1);
@@ -118,7 +115,7 @@ function PlaySondage(
     if (answerIndex > -1) {
       try {
         let response = await fetch(
-          process.env.SONDAGE_API_URL + "/api/sondages/updateCount?id=" + _id,
+          "/api/sondages/updateCount?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({

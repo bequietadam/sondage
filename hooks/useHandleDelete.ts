@@ -5,7 +5,7 @@ export default function useHandleDeleteSondage() {
   async function handleDeleteSondage(sondageId: string) {
     try {
       let response = await fetch(
-        process.env.SONDAGE_API_URL + "/api/sondages/deleteSondage?id=" + sondageId,
+        "/api/sondages/deleteSondage?id=" + sondageId,
         {
           method: "POST",
           headers: {

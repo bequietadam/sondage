@@ -36,8 +36,6 @@ const emptyAnswers = [
 
 
 export async function getStaticPaths() {
-  // let sondages = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/getSondages");
-
   let sondages: unknown = await getSondages();
 
 
@@ -94,48 +92,6 @@ export async function getStaticProps({
     };
   }
 }
-
-// export async function getStaticProps({
-//   params,
-// }: GetStaticPropsContext<PageParams>): Promise<
-//   GetStaticPropsResult<ContentPageProps>
-// > {
-//   try {
-//     let response = await fetch(
-//       process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
-//     );
-
-//     let responseFromServer: ResponseFromServer = await response.json();
-
-//     const maxCount = Math.max(...responseFromServer.answers.map(i => i.count));
-
-//     return {
-//       // Passed to the page component as props
-//       props: {
-//         sondage: {
-//           _id: responseFromServer._id,
-//           title: responseFromServer.title,
-//           description: responseFromServer.description,
-//           answers: responseFromServer.answers,
-//         },
-//         maxCount: maxCount,
-//       },
-//     };
-//   } catch (e) {
-//     console.log("error ", e);
-//     return {
-//       props: {
-//         sondage: {
-//           _id: "  ",
-//           title: "  ",
-//           description: "  ",
-//           answers: emptyAnswers,
-//         },
-//         maxCount: 0,
-//       },
-//     };
-//   }
-// }
 
 
 

@@ -25,7 +25,7 @@ function AddSondage(ref: PageRef) {
     }
     if (title && description && answers.length > 1 && !newAnswer) {
       try {
-        let response = await fetch(process.env.SONDAGE_API_URL + "/api/sondages/addSondage", {
+        let response = await fetch("/api/sondages/addSondage", {
           method: "POST",
           body: JSON.stringify({
             title,

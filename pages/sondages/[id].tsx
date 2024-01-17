@@ -92,45 +92,6 @@ export async function getStaticProps({
 }
 
 
-// export async function getStaticProps({
-//   params,
-// }: GetStaticPropsContext<PageParams>): Promise<
-//   GetStaticPropsResult<ContentPageProps>
-// > {
-//   try {
-//     let response = await fetch(
-//       process.env.SONDAGE_API_URL + "/api/sondages/getSondage?id=" + params?.id
-//     );
-
-//     let responseFromServer: ResponseFromServer = await response.json();
-
-//     return {
-//       // Passed to the page component as props
-//       props: {
-//         sondage: {
-//           _id: responseFromServer._id,
-//           title: responseFromServer.title,
-//           description: responseFromServer.description,
-//           answers: responseFromServer.answers,
-//         },
-//       },
-//     };
-//   } catch (e) {
-//     console.log("error ", e);
-//     return {
-//       props: {
-//         sondage: {
-//           _id: "  ",
-//           title: "  ",
-//           description: "  ",
-//           answers: emptyAnswers,
-//         },
-//       },
-//     };
-//   }
-// }
-
-
 
 function EditSondage(
   {
@@ -158,7 +119,7 @@ function EditSondage(
     if (sondageTitle && sondageDescription && sondageAnswers.length > 1 && !newAnswer) { // try sondage check
       try {
         let response = await fetch(
-          process.env.SONDAGE_API_URL + "/api/sondages/editSondage?id=" + _id,
+          "/api/sondages/editSondage?id=" + _id,
           {
             method: "POST",
             body: JSON.stringify({
